@@ -7,3 +7,14 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Clone This Project
+
+git clone --branch evaluationSystemDemo https://github.com/lazycode404/evaluationSystem
+
+## Setup Laravel Project
+
+- Run composer install
+- Run cp .env.example .env
+- Run php artisan key:generate
+- Run php artisan migrate
+- Run php aritsan serve
