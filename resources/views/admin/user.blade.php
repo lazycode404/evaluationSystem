@@ -62,7 +62,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o"
+                                            <button class="btn btn-primary btn-sm"><i class="fa fa-edit"
                                                     aria-hidden="true"></i></button>
                                         </td>
                                     </tr>

@@ -54,7 +54,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-primary btn-sm editbtn" value={{ $row->id }}>
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                <i class="fa fa-edit" aria-hidden="true"></i>
                                             </button>
                                         </td>
                                     </tr>

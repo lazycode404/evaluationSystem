@@ -22,6 +22,7 @@
                 <div class="card m-0">
                     <!-- /.card-header -->
                     <div class="card-body">
+
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -36,14 +37,16 @@
                             <tbody>
                                 @foreach ($titleProposal as $row)
                                     <tr>
-                                        <td>{{$row->evaluator}}</td>
-                                        <td>{{$row->groupName}}</td>
-                                        <td>{{$row->capstoneTitle}}</td>
-                                        <td>{{$row->section}}</td>
-                                        <td>{{date_format($row->created_at, 'm/d/Y g:i A' )}}</td>
+                                        <td>{{ $row->evaluator }}</td>
+                                        <td>{{ $row->groupName }}</td>
+                                        <td>{{ $row->capstoneTitle }}</td>
+                                        <td>{{ $row->section }}</td>
+                                        <td>{{ date_format($row->created_at, 'm/d/Y g:i A') }}</td>
                                         <td>
-                                            <a href="/admin/title_proposal_evaluation/{{$row->id}}/result" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
-            
+                                            <a href="/admin/title_proposal_evaluation/{{ $row->id }}/result"
+                                                target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"
+                                                    aria-hidden="true"></i></a>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -57,4 +60,3 @@
     </div>
 
 @endsection
-

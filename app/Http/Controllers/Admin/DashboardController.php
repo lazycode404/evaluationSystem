@@ -14,7 +14,8 @@ class DashboardController extends Controller
         $totalCourse = DB::table('course')->count();
         $totalSection = DB::table('section')->count();
         $totalGroup = DB::table('group')->count();
+        $totalTItleEvalResult = DB::table('title_evaluation')->count();
 
-        return view('admin.dashboard', compact('totalUser','totalCourse','totalSection','totalGroup'));
+        return view('admin.dashboard', compact('totalUser','totalCourse','totalSection','totalGroup','totalTItleEvalResult'));
     }
 }

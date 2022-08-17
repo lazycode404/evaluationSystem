@@ -12,9 +12,7 @@
     .col-lg-4 {
         display: inline-block;
     }
-</style>
 
-<style>
     #example2 {
         border: none !important;
     }
@@ -40,14 +38,20 @@
     .sm {
         font-size: 12px;
     }
+
+    .print:last-child {
+        page-break-after: auto;
+    }
 </style>
+
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <a href="#" onclick="javascript:window.close()" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
+                <div class="col-sm-6 text-right">
+                    <button onclick="window.print();" class="btn btn-success btn-sm print"><i class="fa fa-print"
+                            aria-hidden="true"></i>Print</button>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -63,11 +67,10 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
-
                     <table id="example2" class="table">
                         <tr class="trow">
                             <td class="tdow" style="text-align: center;" colspan=""><img
-                                    src=" {{ asset('assets/images/tagslogo.png') }} " height="90" alt="">
+                                    src=" {{ asset('assets/images/tagslogo.png') }} " height="125" alt="">
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1">
                                 <p>
@@ -79,7 +82,8 @@
                                 </p>
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1"><img
-                                    src="{{ asset('assets/images/cctlogo.png') }}" height="90" alt=""></td>
+                                    src="{{ asset('assets/images/cctlogo.png') }}" height="125" alt=""></td>
+                                    <td class="tdow" colspan="1"></td>
                         </tr>
                         <tr class="trow">
                             <td class="tdow" colspan="1"></td>
@@ -91,16 +95,18 @@
                                 </b>
                             </td>
                             <td class="tdow" colspan="1"></td>
+                            <td class="tdow" colspan="1"></td>
+                            <td class="tdow" colspan="1"></td>
+                            <td class="tdow" colspan="1"></td>
                         </tr>
                         <tr class="trow">
-                            <td class="tdow" style="text-align: right;" colspan="1"></td>
-                            <td class="tdow"><b style="margin-right: 35px;">Name of Ratee: </b>{{$member->members}}
+                            <td class="tdow" colspan="3"><b style="margin-right: 35px; margin-left:100px;">Name of Ratee:
+                                </b>{{ $member->members }}
                             </td>
-                            <td class="tdow" style="text-align: center;" colspan="1"></td>
                         </tr>
                         <tr class="trow">
-                            <td class="tdow" style="text-align: right;" colspan="1"></td>
-                            <td class="tdow" colspan="3"><b style="margin-right: 35px;">Title of Study:
+                            <td class="tdow" colspan="3"><b style="margin-right: 35px; margin-left:100px;">Title of
+                                    Study:
                                 </b>{{ $result->capstoneTitle }}</td>
                         </tr>
 
@@ -118,27 +124,27 @@
                                     <tr>
                                         <td>1. Organization of presentation (topical arrangement)</td>
                                         <td style="text-align: center;">20</td>
-                                        <td style="text-align: center;">{{$result->Q1}}</td>
+                                        <td style="text-align: center;">{{ $result->Q1 }}</td>
                                     </tr>
                                     <tr>
                                         <td>2. Content of the presentation (depth of the information presented)</td>
                                         <td style="text-align: center;">35</td>
-                                        <td style="text-align: center;">{{$result->Q2}}</td>
+                                        <td style="text-align: center;">{{ $result->Q2 }}</td>
                                     </tr>
                                     <tr>
                                         <td>3. Composure/Personality (stage presence, attire, projection)</td>
                                         <td style="text-align: center;">5</td>
-                                        <td style="text-align: center;">{{$result->Q3}}</td>
+                                        <td style="text-align: center;">{{ $result->Q3 }}</td>
                                     </tr>
                                     <tr>
                                         <td>4. Delivery (voice quality, visual aids)</td>
                                         <td style="text-align: center;">10</td>
-                                        <td style="text-align: center;">{{$result->Q4}}</td>
+                                        <td style="text-align: center;">{{ $result->Q4 }}</td>
                                     </tr>
                                     <tr>
                                         <td>5. Answers to questions</td>
                                         <td style="text-align: center;">30</td>
-                                        <td style="text-align: center;">{{$result->Q5}}</td>
+                                        <td style="text-align: center;">{{ $result->Q5 }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -148,20 +154,20 @@
                                         <td></td>
                                         <td><b>Numerical: </b></td>
                                         <td>
-                                            <p class="numerical">{{$result->numerical}}</p>
+                                            <p class="numerical">{{ $result->numerical }}</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td><b>Equivalent: </b></td>
                                         <td>
-                                            <p class="equivalent">{{$result->equivalent}}</p>
+                                            <p class="equivalent">{{ $result->equivalent }}</p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="row">
-                                <div class="column">
+                                <div class="column p-5">
                                     <p style="text-align: left; margin-left:120px;">
                                         Average Rating Legend(%): <br>
                                         95.0 – 100 = Excellent <br>
@@ -184,5 +190,4 @@
 @endsection
 
 @section('scripts')
-    
 @endsection

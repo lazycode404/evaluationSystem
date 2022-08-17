@@ -13,7 +13,7 @@
             <li class="nav-item">
                 <a href="/admin/dashboard"
                     class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-tachometer nav-icon"></i>
+                    <i class="fa fa-tachometer-alt nav-icon" aria-hidden="true"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
@@ -55,7 +55,7 @@
 
             <li class="nav-item {{(request()->is('admin/title_proposal_evaluation')) ? 'active menu-open' : ''}}">
                 <a href="#" class="nav-link {{(request()->is('admin/title_proposal_evaluation')) ? 'active menu-open' : ''}}">
-                    <i class="nav-icon fa fa-file-text-o"></i>
+                    <i class="nav-icon fa fa-file-alt" aria-hidden="true"></i>
                     <p>
                         Evaluation Results
                         <i class="fa fa-angle-left right"></i>
