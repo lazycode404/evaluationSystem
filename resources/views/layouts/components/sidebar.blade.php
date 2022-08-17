@@ -10,66 +10,74 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-                <a href="/admin/dashboard"
-                    class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-tachometer-alt nav-icon" aria-hidden="true"></i>
-                    <p>Dashboard</p>
-                </a>
-            </li>
+            @if (Auth::user()->role == 0)
+                <li class="nav-item">
+                    <a href="/admin/dashboard"
+                        class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-tachometer-alt nav-icon" aria-hidden="true"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="/admin/user" class="nav-link {{ 'admin/user' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-user nav-icon"></i>
-                    <p>Users</p>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="/admin/user" class="nav-link {{ 'admin/user' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-user nav-icon"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="/admin/course" class="nav-link {{ 'admin/course' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-list-alt nav-icon"></i>
-                    <p>Course</p>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="/admin/course" class="nav-link {{ 'admin/course' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-list-alt nav-icon"></i>
+                        <p>Course</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/adviser/section"
+                        class="nav-link {{ 'adviser/section' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-th-list nav-icon"></i>
+                        <p>Section</p>
+                    </a>
+                </li>
+            @endif
 
-            <li class="nav-item">
-                <a href="/admin/section" class="nav-link {{ 'admin/section' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-th-list nav-icon"></i>
-                    <p>Section</p>
-                </a>
-            </li>
+            @if (Auth::user()->role == 1)
+                <li class="nav-item">
+                    <a href="/adviser/group"
+                        class="nav-link {{ 'adviser/group' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-address-book nav-icon"></i>
+                        <p>Group</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="/admin/group" class="nav-link {{ 'admin/group' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-address-book nav-icon"></i>
-                    <p>Group</p>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="/adviser/member"
+                        class="nav-link {{ 'adviser/member' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p>Member</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="/admin/member" class="nav-link {{ 'admin/member' == request()->path() ? 'active' : '' }}">
-                    <i class="fa fa-users nav-icon"></i>
-                    <p>Member</p>
-                </a>
-            </li>
-
-            <li class="nav-item {{(request()->is('admin/title_proposal_evaluation')) ? 'active menu-open' : ''}}">
-                <a href="#" class="nav-link {{(request()->is('admin/title_proposal_evaluation')) ? 'active menu-open' : ''}}">
-                    <i class="nav-icon fa fa-file-alt" aria-hidden="true"></i>
-                    <p>
-                        Evaluation Results
-                        <i class="fa fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/admin/title_proposal_evaluation" class="nav-link {{ 'admin/title_proposal_evaluation' == request()->path() ? 'active' : '' }}">
-                            <i class="fa fa-circle nav-icon"></i>
-                            <p>Title Proposal Evaluation</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                <li class="nav-item {{ request()->is('adviser/title_proposal_evaluation') ? 'active menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->is('adviser/title_proposal_evaluation') ? 'active menu-open' : '' }}">
+                        <i class="nav-icon fa fa-file-alt" aria-hidden="true"></i>
+                        <p>
+                            Evaluation Results
+                            <i class="fa fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/adviser/title_proposal_evaluation"
+                                class="nav-link {{ 'adviser/title_proposal_evaluation' == request()->path() ? 'active' : '' }}">
+                                <i class="fa fa-circle nav-icon"></i>
+                                <p>Title Proposal Evaluation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

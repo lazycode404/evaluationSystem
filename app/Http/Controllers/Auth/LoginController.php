@@ -32,13 +32,13 @@ class LoginController extends Controller
     {
         if(Auth::user()->status == 1)
         {
-            if(Auth::user()->role == '0') // 0 = System Admin | 1 = Admin | 2 = User
+            if(Auth::user()->role == '0') // 0 = System Admin | 1 = adviser | 2 = User
             {
                 return redirect('admin/dashboard');
             }
             elseif(Auth::user()->role == '1')
             {
-                return redirect('admin/dashboard');
+                return redirect('adviser/dashboard');
             }
             else
             {

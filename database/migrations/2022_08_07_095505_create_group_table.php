@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('capstoneTitle');
             $table->string('section');
             $table->string('course');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

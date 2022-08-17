@@ -64,36 +64,6 @@
                     <a href="/admin/section" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-indigo">
-                    <div class="inner">
-                        <h3>{{$totalGroup}}</h3>
-
-                        <p>Total Groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-address-book"></i>
-                    </div>
-                    <a href="/admin/group" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{$totalTItleEvalResult}}</h3>
-
-                        <p>Title Evaluation Proposal Results</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-file-alt"></i>
-                    </div>
-                    <a href="/admin/title_proposal_evaluation" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

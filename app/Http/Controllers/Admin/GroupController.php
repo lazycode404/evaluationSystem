@@ -7,17 +7,23 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\GroupModel;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class GroupController extends Controller
 {
     public function index()
     {
-        $group = GroupModel::all();
+        $group = GroupModel::where('status',1)->get();
         $section = Section::orderBy('Sectionname')->where('status',1)->get();
         $section1 = Section::orderBy('Sectionname')->where('status',1)->get();
         $course1 = Course::where('status',1)->get();
         $course = Course::where('status',1)->get();
-        return view('admin.group', compact('group','section','course','section1','course1'));
+        $archive = GroupModel::where('status',0)->get();
+
+        // return response()->json([
+        //     'group'=> $group,
+        // ]);
+        return view('adviser.group', compact('group','section','course','section1','course1','archive'));
     }
 
     public function store(Request $request)
@@ -41,7 +47,7 @@ class GroupController extends Controller
             $group->section = $groupSection;
             $group->course = $groupCourse;
             $group->save();
-            return redirect('admin/group')->with('success','Group Added Successfully!');
+            return redirect('adviser/group')->with('success','Group Added Successfully!');
         }
     }
 
@@ -70,6 +76,6 @@ class GroupController extends Controller
         $group->course = $groupcourse;
         $group->save();
 
-        return redirect('admin/group')->with('success','Group Update Successfully!');
+        return redirect('adviser/group')->with('success','Group Update Successfully!');
     }
 }

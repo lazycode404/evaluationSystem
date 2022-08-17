@@ -26,8 +26,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card m-0">
-                    <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-header">
+                        <a href="#" class="justify-content-end" data-toggle="modal" data-target="#archiveModal"
+                            data-backdrop="static" data-keyboard="false">Archive</a>
+                    </div>
+                    <div class="card-body" id="updateCARD">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -80,7 +83,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/group/create') }}" method="POST">
+                <form action="{{ url('adviser/group/create') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -90,8 +93,8 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Capstone Title</label>
-                            <textarea type="text" class="form-control" name="capstoneTitle" id="capstoneTitle"
-                                placeholder="Enter Capstone Title" required></textarea>
+                            <textarea type="text" class="form-control" name="capstoneTitle" id="capstoneTitle" placeholder="Enter Capstone Title"
+                                required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="name">Section</label>
@@ -133,7 +136,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/group/edit') }}" method="POST">
+                <form action="{{ url('adviser/group/edit') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" id="groupID" name="groupID">
@@ -159,7 +162,8 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Course</label>
-                            <select class="form-control" aria-label="Default select example" name="editgroupcourse" id="editgroupcourse">
+                            <select class="form-control" aria-label="Default select example" name="editgroupcourse"
+                                id="editgroupcourse">
                                 <option selected>Select Course</option>
                                 @foreach ($course1 as $course1)
                                     <option value="{{ $course1->Coursename }}">{{ $course1->description }}</option>
@@ -172,6 +176,51 @@
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- VIEW ARCHIVE GROUP MODAL -->
+    <div class="modal fade" id="archiveModal" tabindex="-1" role="dialog" aria-labelledby="archiveModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="archiveModal">Archive Group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th width="700">Capstone Title</th>
+                                <th width="80">Section</th>
+                                <th width="70">Course</th>
+                                <th width="90">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($archive as $archive)
+                                <tr>
+                                    <td>{{ $archive->name }}</td>
+                                    <td>{{ $archive->capstoneTitle }}</td>
+                                    <td>{{ $archive->section }}</td>
+                                    <td>{{ $archive->course }}</td>
+                                    <td>
+                                        <input data-id="{{ $archive->id }}" data-size="small" data-width="90"
+                                            class="toggle-class" type="checkbox" data-onstyle="success"
+                                            data-offstyle="danger" data-toggle="toggle" data-on="Active"
+                                            data-off="Inactive" {{ $archive->status ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -208,6 +257,7 @@
                         toastr.options.closeDuration = 100;
                         toastr.options.positionClass = 'toast-top-center';
                         toastr.success(data.message);
+                        location.reload();
                     }
                 });
             });
@@ -234,11 +284,11 @@
                 $('#editgroupcourse').val(data[3]).attr('selected', true);
 
                 // console.log(data);
-                 console.log(groupID);
+                console.log(groupID);
             });
         });
 
-        
+
         $(document).ready(function() {
             // show the alert
             setTimeout(function() {

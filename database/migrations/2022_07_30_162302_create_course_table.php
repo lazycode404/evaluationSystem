@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('Coursename');
             $table->string('description');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

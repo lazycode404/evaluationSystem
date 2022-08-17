@@ -13,7 +13,7 @@ class titleProposalResultController extends Controller
     {
         
         $titleProposal = titleEvaluation::all();
-        return view('admin.titleProposal', compact('titleProposal'));
+        return view('adviser.titleProposal', compact('titleProposal'));
     }
 
     public function viewresultBygroup($id)
@@ -22,6 +22,6 @@ class titleProposalResultController extends Controller
         
         $member = Member::where('groupName',$result->groupName)->first();
 
-        return view('admin.result.title_evaluation_result', compact('result','member'));
+        return view('adviser.result.title_evaluation_result', compact('result','member'));
     }
 }

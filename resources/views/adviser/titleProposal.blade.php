@@ -43,7 +43,7 @@
                                         <td>{{ $row->section }}</td>
                                         <td>{{ date_format($row->created_at, 'm/d/Y g:i A') }}</td>
                                         <td>
-                                            <a href="/admin/title_proposal_evaluation/{{ $row->id }}/result"
+                                            <a href="/adviser/title_proposal_evaluation/{{ $row->id }}/result"
                                                 target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"
                                                     aria-hidden="true"></i></a>
 

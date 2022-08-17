@@ -19,7 +19,7 @@ class MemberController extends Controller
         $section = Section::orderBy('Sectionname')->get();
         $course = Course::all();
         $member = Member::all();
-        return view('admin.member', compact('group','course','section','member','groups'));
+        return view('adviser.member', compact('group','course','section','member','groups'));
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class MemberController extends Controller
             $member->section = $memberSection;
             $member->course = $memberCourse;
             $member->save();
-            return redirect('admin/member')->with('success','Members Added Successfully!');
+            return redirect('adviser/member')->with('success','Members Added Successfully!');
         }
     }
 
@@ -71,6 +71,6 @@ class MemberController extends Controller
         $member->members = $members;
         $member->groupName = $memberGroup;
         $member->save();
-        return redirect('admin/member')->with('success','Members Updated Successfully!');
+        return redirect('adviser/member')->with('success','Members Updated Successfully!');
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('Sectionname');
             $table->string('description');
             $table->string('sectionCourse');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
