@@ -39,8 +39,15 @@
         font-size: 12px;
     }
 
-    .print:last-child {
-        page-break-after: auto;
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        .printable,
+        .printable * {
+            visibility: visible;
+        }
     }
 </style>
 
@@ -66,10 +73,10 @@
         <div class="container">
             <div class="card">
                 <!-- /.card-header -->
-                <div class="card-body">
+                <div class="card-body printable">
                     <table id="example2" class="table">
                         <tr class="trow">
-                            <td class="tdow" style="text-align: center;" colspan=""><img
+                            <td class="tdow" style="text-align: center;" colspan="1"><img
                                     src=" {{ asset('assets/images/tagslogo.png') }} " height="125" alt="">
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1">
@@ -83,7 +90,7 @@
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1"><img
                                     src="{{ asset('assets/images/cctlogo.png') }}" height="125" alt=""></td>
-                                    <td class="tdow" colspan="1"></td>
+                            <td class="tdow" colspan="1"></td>
                         </tr>
                         <tr class="trow">
                             <td class="tdow" colspan="1"></td>
@@ -97,10 +104,10 @@
                             <td class="tdow" colspan="1"></td>
                             <td class="tdow" colspan="1"></td>
                             <td class="tdow" colspan="1"></td>
-                            <td class="tdow" colspan="1"></td>
                         </tr>
                         <tr class="trow">
-                            <td class="tdow" colspan="3"><b style="margin-right: 35px; margin-left:100px;">Name of Ratee:
+                            <td class="tdow" colspan="3"><b style="margin-right: 35px; margin-left:100px;">Name of
+                                    Ratee:
                                 </b>{{ $member->members }}
                             </td>
                         </tr>
@@ -168,7 +175,7 @@
                             </table>
                             <div class="row">
                                 <div class="column p-5">
-                                    <p style="text-align: left; margin-left:120px;">
+                                    <p style="text-align: left; margin-left:70px;">
                                         Average Rating Legend(%): <br>
                                         95.0 – 100 = Excellent <br>
                                         89.0 – 94.9 = Outstanding <br>
@@ -178,10 +185,13 @@
                                         below 70 = Poor/Failed <br>
                                     </p>
                                 </div>
+                                
                             </div>
-                            <br>
+                        </tr>
+                        <tr>
                         </tr>
                     </table>
+
                 </div>
                 <!-- /.card-body -->
             </div>

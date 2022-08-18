@@ -85,9 +85,14 @@ Route::prefix('adviser')->middleware(['auth', 'adviser'])->group(function () {
     // SYSTEM ADMIN ADD GROUP
     Route::post('group/create', [App\Http\Controllers\Admin\GroupController::class, 'store']);
     // UPDATE GROUP STATUS
-    Route::get('group/update', [App\Http\Controllers\Admin\GroupController::class, 'groupupdateStatus'])->name('group.update.status');
+    Route::post('group/update', [App\Http\Controllers\Admin\GroupController::class, 'groupupdateStatus']);
     // UPDATE DATA GROUP
     Route::post('group/edit', [App\Http\Controllers\Admin\GroupController::class, 'groupupdateData']);
+
+    Route::get('group/search', [App\Http\Controllers\Admin\GroupController::class, 'searchGroupdata'])->name('group.search');
+
+    Route::post('group/unarchive',[App\Http\Controllers\Admin\GroupController::class, 'unarchive']);
+    
 
     // SYSTEM ADMIN VIEW MEMBER
     Route::get('/member', [App\Http\Controllers\Admin\MemberController::class, 'index']);

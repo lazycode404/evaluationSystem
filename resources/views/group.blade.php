@@ -66,17 +66,19 @@
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <!-- /.col-md-6 -->
-                @foreach ($member as $member)
-                    @if ($member->status == 1)
+                @foreach ($group as $group)
+                    @if ($group->status == 1)
                         <div class="col-lg-4 col-4 mx-auto">
                             <div class="card text-center" style="width: 18rem;">
                                 <div class="card-body">
                                     <b>
-                                        <h5>{{ $member->groupName }}</h5>
+                                        <h5>{{ $group->name }}</h5>
                                         <small class="section">{{$section->Sectionname}}</small>
                                     </b>
-                                    <p class="card-text">{{$member->members}}</p>
-                                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname.'/'.$member->groupName) }}"
+                                    @foreach ($member as $item)
+                                    <p class="card-text">{{$item->members}}</p>
+                                    @endforeach
+                                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname.'/'.$group->name) }}"
                                         class="btn btn-primary">Select</a>
                                 </div>
                             </div>

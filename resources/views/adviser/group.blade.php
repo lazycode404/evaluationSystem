@@ -26,49 +26,50 @@
         <div class="row">
             <div class="col-12">
                 <div class="card m-0">
-                    <div class="card-header">
-                        <a href="#" class="justify-content-end" data-toggle="modal" data-target="#archiveModal"
-                            data-backdrop="static" data-keyboard="false">Archive</a>
-                    </div>
-                    <div class="card-body" id="updateCARD">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th width="700">Capstone Title</th>
-                                    <th width="80">Section</th>
-                                    <th width="70">Course</th>
-                                    <th width="90">Status</th>
-                                    <th width="8">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($group as $row)
+                    <form action="{{ url('adviser/group/update') }}" method="POST" class="float-right">
+                        @csrf
+                        <div class="card-header">
+                            <a href="#" class="justify-content-end btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#archiveModal" data-backdrop="static" data-keyboard="false"><i
+                                    class="fa fa-archive" aria-hidden="true"></i>&nbsp;Archived Groups</a>
+                            <button type="submit" class="btn btn-danger btn-sm float-right"><i class="fa fa-caret-down" aria-hidden="true"></i> Archived</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $row->name }}</td>
-                                        <td>{{ $row->capstoneTitle }}</td>
-                                        <td>{{ $row->section }}</td>
-                                        <td>{{ $row->course }}</td>
-                                        <td>
-                                            <input data-id="{{ $row->id }}" data-size="small" data-width="90"
-                                                class="toggle-class" type="checkbox" data-onstyle="success"
-                                                data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                                                data-off="Inactive" {{ $row->status ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm editbtn" value={{ $row->id }}>
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </button>
-                                        </td>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th width="700">Capstone Title</th>
+                                        <th width="80">Section</th>
+                                        <th width="70">Course</th>
+                                        <th width="8">Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
+                                </thead>
+                                <tbody>
+                                    @foreach ($group as $row)
+                                        <tr>
+                                            <td><input type="checkbox" name="ids[{{ $row->id }}]"
+                                                    value="{{ $row->id }}"></td>
+                                            <td>{{ $row->name }}</td>
+                                            <td>{{ $row->capstoneTitle }}</td>
+                                            <td>{{ $row->section }}</td>
+                                            <td>{{ $row->course }}</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm editbtn" value={{ $row->id }}>
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                    </form>
                 </div>
+                <!-- /.card-body -->
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -193,33 +194,42 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th width="700">Capstone Title</th>
-                                <th width="80">Section</th>
-                                <th width="70">Course</th>
-                                <th width="90">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($archive as $archive)
-                                <tr>
-                                    <td>{{ $archive->name }}</td>
-                                    <td>{{ $archive->capstoneTitle }}</td>
-                                    <td>{{ $archive->section }}</td>
-                                    <td>{{ $archive->course }}</td>
-                                    <td>
-                                        <input data-id="{{ $archive->id }}" data-size="small" data-width="90"
-                                            class="toggle-class" type="checkbox" data-onstyle="success"
-                                            data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                                            data-off="Inactive" {{ $archive->status ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="card m-0">
+                        <form action="{{ url('adviser/group/unarchive') }}" method="POST">
+                            @csrf
+                            <div class="card-header">
+                                <input type="text" class="col-md-3 form-control" style="position: absolute"
+                                    id="search" name="search" placeholder="Search Group Data">
+                                <button type="submit" class="btn btn-danger btn-sm float-right">Unarchived</button>
+                            </div>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th width="700">Capstone Title</th>
+                                            <th width="80">Section</th>
+                                            <th width="70">Course</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="archiveclass">
+                                        @foreach ($archive as $archive)
+                                            <tr>
+                                                <td><input type="checkbox" name="unarchiveIDS[{{ $archive->id }}]"
+                                                        value="{{ $archive->id }}"></td>
+                                                <td>{{ $archive->name }}</td>
+                                                <td>{{ $archive->capstoneTitle }}</td>
+                                                <td>{{ $archive->section }}</td>
+                                                <td>{{ $archive->course }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tbody id="content" class="searchdata"></tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,40 +240,6 @@
 
 @section('scripts')
     <script>
-        let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-        elems.forEach(function(html) {
-            let switchery = new Switchery(html, {
-                size: 'small'
-            });
-        });
-
-        $(document).ready(function() {
-            $('.toggle-class').change(function() {
-                let status = $(this).prop('checked') === true ? 1 : 0;
-                let groupID = $(this).data('id');
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '{{ route('group.update.status') }}',
-                    data: {
-                        'status': status,
-                        'groupID': groupID
-                    },
-                    success: function(data) {
-                        console.log(data.message);
-                        toastr.options.closeButton = true;
-                        toastr.options.closeMethod = 'fadeOut';
-                        toastr.options.closeDuration = 100;
-                        toastr.options.positionClass = 'toast-top-center';
-                        toastr.success(data.message);
-                        location.reload();
-                    }
-                });
-            });
-        });
-
-
         $(document).ready(function() {
             $('.editbtn').click(function(e) {
                 e.preventDefault();
@@ -278,13 +254,13 @@
                 }).get();
 
                 $('#groupID').val(groupID);
-                $('#editGroupname').val(data[0]);
-                $('#editcapstoneTitle').val(data[1]);
-                $('#editGroupSection').val(data[2]).attr('selected', true);
-                $('#editgroupcourse').val(data[3]).attr('selected', true);
+                $('#editGroupname').val(data[1]);
+                $('#editcapstoneTitle').val(data[2]);
+                $('#editGroupSection').val(data[3]).attr('selected', true);
+                $('#editgroupcourse').val(data[4]).attr('selected', true);
 
                 // console.log(data);
-                console.log(groupID);
+                // console.log(groupID);
             });
         });
 
@@ -295,5 +271,31 @@
                 $(".alert").alert('close');
             }, 3000);
         });
+
+        $('#search').on('keyup', function() {
+            $value = $(this).val();
+
+            console.log($value);
+
+            if ($value) {
+                $('.archiveclass').hide();
+                $('.searchdata').show();
+
+            } else {
+                $('.archiveclass').show();
+                $('.searchdata').hide();
+            }
+            $.ajax({
+                type: 'GET',
+                url: '{{ URL::to('adviser/group/search') }}',
+                data: {
+                    'search': $value
+                },
+
+                success: function(data) {
+                    $('#content').html(data);
+                }
+            })
+        })
     </script>
 @endsection

@@ -6,8 +6,9 @@ use App\Models\Course;
 use App\Models\Member;
 use App\Models\Section;
 use App\Models\GroupModel;
-use App\Models\titleEvaluation;
 use Illuminate\Http\Request;
+use App\Models\titleEvaluation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -51,11 +52,16 @@ class HomeController extends Controller
         $section = Section::where('Sectionname', $section_name)->where('status', 1)->first();
 
         if ($courses && $section) {
-            $member = Member::where('course', $courses->Coursename)
+            $group = GroupModel::where('course', $courses->Coursename)
                 ->where('section', $section->Sectionname)
                 ->where('status', 1)->get();
 
-            return view('group', compact('courses', 'section', 'member'));
+            $member = DB::table('member')
+            ->join('group','member.groupName','=','group.name')
+            ->select('member.members')
+            ->get();
+
+            return view('group', compact('courses', 'section', 'member','group'));
         }
     }
 

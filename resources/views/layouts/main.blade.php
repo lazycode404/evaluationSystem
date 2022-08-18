@@ -12,8 +12,8 @@
 
     {{-- ADMIN LTE ASSETS --}}
     <link rel="stylesheet" href="{{ asset('assets/extras/fontsgoogleapis.css') }}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
@@ -81,7 +81,8 @@
     <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
 
     <!-- jQuery -->
-    <script src="{{ asset('assets/extras/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/extras/bootstrap.bundle.min.js') }}">
+    </script>
     {{-- <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script> --}}
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>

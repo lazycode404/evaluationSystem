@@ -7,6 +7,21 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="{{asset('assets/dist/img/149071.png')}}" class="img-circle elevation-1" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">
+                {{Str::upper(Auth::user()->name)}}
+            </a>
+            @if(Auth::user()->role == 0)
+            <span class="text-success">SYSTEM ADMINISTRATOR</span>
+            @elseif(Auth::user()->role == 1)
+            <span class="text-success">ADVISER</span>
+            @endif
+        </div>
+    </div>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -33,7 +48,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/adviser/section"
+                    <a href="/admin/section"
                         class="nav-link {{ 'adviser/section' == request()->path() ? 'active' : '' }}">
                         <i class="fa fa-th-list nav-icon"></i>
                         <p>Section</p>
