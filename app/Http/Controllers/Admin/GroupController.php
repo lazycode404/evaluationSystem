@@ -52,7 +52,7 @@ class GroupController extends Controller
     {
         $ids = $request->ids;
         if ($ids == null) {
-            return redirect('adviser/group')->with('error', 'Something Went Wrong!');
+            return redirect('adviser/group')->with('error', 'Please check the group you want to put in archived!');
         } else {
             $grouptoArchive = DB::table('group')
                 ->whereIn('id', $ids)

@@ -99,10 +99,12 @@ Route::prefix('adviser')->middleware(['auth', 'adviser'])->group(function () {
     // SYSTEM ADMIN ADD MEMBERS
     Route::post('member/create', [App\Http\Controllers\Admin\MemberController::class, 'store']);
     // UPDATE MEMBER STATUS
-    Route::get('member/update', [App\Http\Controllers\Admin\MemberController::class, 'memberupdateStatus'])->name('member.update.status');
+    Route::post('member/update', [App\Http\Controllers\Admin\MemberController::class, 'memberupdateStatus'])->name('member.update.status');
     // UPDATE DATA MEMBER
     Route::post('member/edit', [App\Http\Controllers\Admin\MemberController::class, 'memberDataUpdate']);
+    Route::post('member/unarchived', [App\Http\Controllers\Admin\MemberController::class, 'unarchived']);
 
+    Route::get('member/search', [App\Http\Controllers\Admin\MemberController::class, 'searchMemberdata'])->name('member.search');
 
     //SYSTEM ADMIN VIEW TITLE PROPOSAL RESULTS
     Route::get('/title_proposal_evaluation', [App\Http\Controllers\Admin\titleProposalResultController::class, 'index']);

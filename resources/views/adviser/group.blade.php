@@ -32,7 +32,8 @@
                             <a href="#" class="justify-content-end btn btn-success btn-sm" data-toggle="modal"
                                 data-target="#archiveModal" data-backdrop="static" data-keyboard="false"><i
                                     class="fa fa-archive" aria-hidden="true"></i>&nbsp;Archived Groups</a>
-                            <button type="submit" class="btn btn-danger btn-sm float-right"><i class="fa fa-caret-down" aria-hidden="true"></i> Archived</button>
+                            <button type="submit" class="btn btn-danger btn-sm float-right"><i class="fa fa-caret-down"
+                                    aria-hidden="true"></i> Archived</button>
                         </div>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
@@ -64,12 +65,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
                     </form>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -269,13 +270,13 @@
             // show the alert
             setTimeout(function() {
                 $(".alert").alert('close');
-            }, 3000);
+            }, 4000);
         });
 
         $('#search').on('keyup', function() {
             $value = $(this).val();
 
-            console.log($value);
+            // console.log($value);
 
             if ($value) {
                 $('.archiveclass').hide();

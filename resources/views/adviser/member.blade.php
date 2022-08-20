@@ -26,40 +26,47 @@
         <div class="row">
             <div class="col-12">
                 <div class="card m-0">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th width="300">Group Name</th>
-                                    <th width="80">Section</th>
-                                    <th width="70">Course</th>
-                                    <th width="90">Status</th>
-                                    <th width="8">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($member as $member)
+                    <form action="{{ url('adviser/member/update') }}" method="POST">
+                        @csrf
+                        <div class="card-header">
+                            <a href="#" class="justify-content-end btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#archiveModal" data-backdrop="static" data-keyboard="false"><i
+                                    class="fa fa-archive" aria-hidden="true"></i>&nbsp;Archived Members</a>
+                            <button type="submit" class="btn btn-danger btn-sm float-right"><i class="fa fa-caret-down"
+                                    aria-hidden="true"></i> Archived</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $member->members }}</td>
-                                        <td>{{ $member->groupName }}</td>
-                                        <td>{{ $member->section }}</td>
-                                        <td>{{ $member->course }}</td>
-                                        <td><input data-id="{{ $member->id }}" data-size="small" data-width="90"
-                                                class="toggle-class" type="checkbox" data-onstyle="success"
-                                                data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                                                data-off="Inactive" {{ $member->status ? 'checked' : '' }}></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm editbtn" value={{ $member->id }}>
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </button>
-                                        </td>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th width="300">Group Name</th>
+                                        <th width="80">Section</th>
+                                        <th width="70">Course</th>
+                                        <th width="50">Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach ($member as $member)
+                                        <tr>
+                                            <td><input type="checkbox" name="ids[{{ $member->id }}]"
+                                                    value="{{ $member->id }}"></td>
+                                            <td>{{ $member->members }}</td>
+                                            <td>{{ $member->groupName }}</td>
+                                            <td>{{ $member->section }}</td>
+                                            <td>{{ $member->course }}</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm editbtn" value={{ $member->id }}>
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
                     <!-- /.card-body -->
                 </div>
             </div>
@@ -132,7 +139,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Group Name</label>
-                            <select class="form-control" name="editGroupname" id="editGroupname" aria-label="Default select example">
+                            <select class="form-control" name="editGroupname" id="editGroupname"
+                                aria-label="Default select example">
                                 <option selected>Choose Group Name</option>
                                 @foreach ($groups as $groups)
                                     <option value="{{ $groups->name }}">{{ $groups->name }}</option>
@@ -149,44 +157,65 @@
         </div>
     </div>
 
+    <!-- VIEW ARCHIVE MEMBER MODAL -->
+    <div class="modal fade" id="archiveModal" tabindex="-1" role="dialog" aria-labelledby="archiveModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="archiveModal">Archive Member</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card m-0">
+                        <form action="{{url('adviser/member/unarchived')}}" method="POST">
+                            @csrf
+                            <div class="card-header">
+                                <input type="text" class="col-md-3 form-control" style="position: absolute"
+                                    id="search" name="search" placeholder="Search Member Data">
+                                <button type="submit" class="btn btn-danger btn-sm float-right">Unarchived</button>
+                            </div>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th width="300">Group Name</th>
+                                            <th width="80">Section</th>
+                                            <th width="70">Course</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="archivedclass">
+                                        @foreach ($archived as $archived)
+                                            <tr>
+                                                <td><input type="checkbox" name="unarchivedIDS[{{ $archived->id }}]"
+                                                        value="{{ $archived->id }}"></td>
+                                                <td>{{ $archived->members }}</td>
+                                                <td>{{ $archived->groupName }}</td>
+                                                <td>{{ $archived->section }}</td>
+                                                <td>{{ $archived->course }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tbody id="content" class="searchdata"></tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
     <script>
-        // let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-        // elems.forEach(function(html) {
-        //     let switchery = new Switchery(html, {
-        //         size: 'small'
-        //     });
-        // });
-
         $(document).ready(function() {
-            $('.toggle-class').change(function() {
-                let status = $(this).prop('checked') === true ? 1 : 0;
-                let memberID = $(this).data('id');
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '{{ route('member.update.status') }}',
-                    data: {
-                        'status': status,
-                        'memberID': memberID
-                    },
-                    success: function(data) {
-                        console.log(data.message);
-                        toastr.options.closeButton = true;
-                        toastr.options.closeMethod = 'fadeOut';
-                        toastr.options.closeDuration = 100;
-                        toastr.options.positionClass = 'toast-top-center';
-                        toastr.success(data.message);
-                    }
-                });
-            });
-        });
-
-        $(document).ready(function(){
-            $('.editbtn').click(function(e){
+            $('.editbtn').click(function(e) {
                 e.preventDefault();
 
                 var memberID = $(this).val();
@@ -194,26 +223,52 @@
 
                 $tr = $(this).closest('tr');
 
-                var data = $tr.children('td').map(function(){
+                var data = $tr.children('td').map(function() {
                     return $(this).text();
                 }).get();
 
                 $('#memberID').val(memberID);
-                $('#editMembername').val(data[0]);
-                $('#editGroupname').val(data[1]).attr('selected',true);
+                $('#editMembername').val(data[1]);
+                $('#editGroupname').val(data[2]).attr('selected', true);
 
-
-                
                 // console.log(data);
                 // console.log(memberID);
             });
         });
-        
+
         $(document).ready(function() {
             // show the alert
             setTimeout(function() {
                 $(".alert").alert('close');
-            }, 3000);
+            }, 4000);
         });
+
+        $('#search').on('keyup',function(){
+            $value = $(this).val();
+
+            console.log($value);
+
+            if($value)
+            {
+                $('.archivedclass').hide();
+                $('.searchdata').show();
+            }
+            else
+            {
+                $('.archivedclass').show();
+                $('.searchdata').hide();
+            }
+            $.ajax({
+                type: 'GET',
+                url: '{{ URL::to('adviser/member/search') }}',
+                data: {
+                    'search': $value
+                },
+                success: function(data)
+                {
+                    $('#content').html(data);
+                }
+            })
+        })
     </script>
 @endsection
