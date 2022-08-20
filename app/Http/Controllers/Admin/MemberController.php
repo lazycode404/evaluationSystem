@@ -118,17 +118,45 @@ class MemberController extends Controller
     public function searchMemberdata(Request $request)
     {
         $output = "";
-        $member = Member::where('name', 'Like', '%' . $request->search . '%')->where('status', 0)->get();
-
-        foreach($member as $members)
+        
+        $memberSearch = $request->search;
+    
+        if($memberSearch != '')
         {
+            $member = Member::where('status',0)
+            ->where('members', 'like', '%' . $memberSearch . '%')
+            ->get();
+        }
+        else
+        {
+            $member = DB::table('member')->where('status', 0)->get();
+        }
+
+        $total = $member->count();
+
+        if($total > 0)
+        {
+            foreach($member as $members)
+            {
+                $output .=
+                    '<tr>
+                    <td>' . '<input type="checkbox" name="unarchiveIDS['.$members->id.']"
+                    value="'.$members->id.'">' . '</td>
+                    <td>' . $members->members . '</td>
+                    <td>' . $members->groupName . '</td>
+                    <td>' . $members->section . '</td>
+                    <td>' . $members->course . '</td>
+                </tr>';
+            }
+        }
+        else
+        {
+            $output = 
             '<tr>
-                <td></td>
-                <td>' . $members->members . '</td>
-                <td>' . $members->groupName . '</td>
-                <td>' . $members->seection . '</td>
-                <td>' . $members->course . '</td>
+            <td class="text-center" colspan="5">Members does not exist</td>
             </tr>';
         }
+
+        return response($output);
     }
 }

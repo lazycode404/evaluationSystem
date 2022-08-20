@@ -44,6 +44,10 @@
             visibility: hidden;
         }
 
+        @page {
+            size: A4;
+        }
+
         .printable,
         .printable * {
             visibility: visible;
@@ -185,7 +189,7 @@
                                         below 70 = Poor/Failed <br>
                                     </p>
                                 </div>
-                                
+
                             </div>
                         </tr>
                         <tr>

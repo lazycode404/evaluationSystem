@@ -5,17 +5,20 @@
 @endsection
 
 <style>
-    .back{
-        text-decoration: none!important;
+    .back {
+        text-decoration: none !important;
 
     }
-    .back:hover{
+
+    .back:hover {
         color: black;
     }
-    .card-text{
+
+    .card-text {
         font-size: 14px;
     }
-    .section{
+
+    .section {
         font-size: 11px;
         color: gray;
     }
@@ -51,7 +54,8 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ url('home/' . $courses->Coursename) }}" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
+                    <a href="{{ url('home/' . $courses->Coursename) }}" class="back"><i class="fa fa-arrow-left"
+                            aria-hidden="true"></i> GO BACK</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -66,24 +70,20 @@
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <!-- /.col-md-6 -->
-                @foreach ($group as $group)
-                    @if ($group->status == 1)
-                        <div class="col-lg-4 col-4 mx-auto">
-                            <div class="card text-center" style="width: 18rem;">
-                                <div class="card-body">
-                                    <b>
-                                        <h5>{{ $group->name }}</h5>
-                                        <small class="section">{{$section->Sectionname}}</small>
-                                    </b>
-                                    @foreach ($member as $item)
-                                    <p class="card-text">{{$item->members}}</p>
-                                    @endforeach
-                                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname.'/'.$group->name) }}"
-                                        class="btn btn-primary">Select</a>
-                                </div>
+                @foreach ($member as $member)
+                    <div class="col-lg-4 col-4 mx-auto">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <b>
+                                    <h5>{{$member->capstoneTitle}}</h5>
+                                    <small class="section">{{ $section->Sectionname }}</small>
+                                </b>
+                                <p class="card-text">{{$member->members}}</p>
+                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->Gname) }}"
+                                    class="btn btn-primary">Select</a>
                             </div>
                         </div>
-                    @endif
+                    </div>
                 @endforeach
                 <!-- /.col-md-6 -->
             </div>

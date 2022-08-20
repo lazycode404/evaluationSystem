@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\titleEvaluation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class HomeController extends Controller
 {
@@ -56,12 +57,10 @@ class HomeController extends Controller
                 ->where('section', $section->Sectionname)
                 ->where('status', 1)->get();
 
-            $member = DB::table('member')
-            ->join('group','member.groupName','=','group.name')
-            ->select('member.members')
-            ->get();
-
-            return view('group', compact('courses', 'section', 'member','group'));
+            $member = Member::join('group','group.name','=', 'member.groupName')
+            ->get(['group.name as Gname','member.groupName as mName','member.members','group.capstoneTitle','group.status as gStatus','member.status as mStatus']);
+    
+            return view('group', compact('courses', 'section','group','member'));
         }
     }
 

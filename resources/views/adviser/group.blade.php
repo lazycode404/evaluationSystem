@@ -196,11 +196,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="card m-0">
-                        <form action="{{ url('adviser/group/unarchive') }}" method="POST">
+                        <form action="{{ url('adviser/group/unarchive') }}" method="POST" id="disableEnter">
                             @csrf
                             <div class="card-header">
                                 <input type="text" class="col-md-3 form-control" style="position: absolute"
-                                    id="search" name="search" placeholder="Search Group Data">
+                                    id="search" name="search" placeholder="Search Group Name">
                                 <button type="submit" class="btn btn-danger btn-sm float-right">Unarchived</button>
                             </div>
                             <div class="card-body">
@@ -297,6 +297,15 @@
                     $('#content').html(data);
                 }
             })
+        })
+
+        $('#disableEnter').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+
+            if (keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
         })
     </script>
 @endsection

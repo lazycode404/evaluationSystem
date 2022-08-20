@@ -71,7 +71,7 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName) }}"
+                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name) }}"
                         class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
@@ -89,7 +89,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form
-                        action="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName . '/title_evalutaion/submitted') }}"
+                        action="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/title_evalutaion/submitted') }}"
                         method="POST">
                         @csrf
                         <table id="example2" class="table">

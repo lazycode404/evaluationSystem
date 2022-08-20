@@ -75,7 +75,7 @@
                                 <small class="section"></small>
                             </b>
                             @if ($viewbtnresult == null)
-                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName . '/title_evalutaion') }}"
+                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/title_evalutaion') }}"
                                     class="btn btn-primary">Select</a>
                             @else
                                 <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName . '/title_evalutaion/result') }}"
@@ -94,7 +94,7 @@
                                 <h5>Final Evaluation <br> Sheet</h5>
                                 <small class="section"></small>
                             </b>
-                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName) }}"
+                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name) }}"
                                 class="btn btn-primary">Select</a>
                         </div>
                     </div>

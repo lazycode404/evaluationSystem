@@ -88,17 +88,41 @@ class GroupController extends Controller
     public function searchGroupdata(Request $request)
     {
         $output = "";
-        $group = GroupModel::where('name', 'Like', '%' . $request->search . '%')->where('status', '=', 0)->get();
 
-        foreach ($group as $groups) {
-            $output .=
-                '<tr>
-            <td>' . '<input type="checkbox" name="unarchiveIDS['.$groups->id.']"
-            value="'.$groups->id.'">' . '</td>
-            <td>' . $groups->name . '</td>
-            <td>' . $groups->capstoneTitle . '</td>
-            <td>' . $groups->section . '</td>
-            <td>' . $groups->course . '</td>
+        $groupSearch = $request->search;
+
+        if($groupSearch != '')
+        {
+            $group = GroupModel::where('status',0)
+            ->where('name', 'like', '%' . $groupSearch . '%')
+            ->get();
+        }
+        else
+        {
+            $group = DB::table('group')->where('status', 0)->get();
+        }
+
+        $total = $group->count();
+
+        if($total > 0)
+        {
+            foreach ($group as $groups) {
+                $output .=
+                    '<tr>
+                <td>' . '<input type="checkbox" name="unarchiveIDS['.$groups->id.']"
+                value="'.$groups->id.'">' . '</td>
+                <td>' . $groups->name . '</td>
+                <td>' . $groups->capstoneTitle . '</td>
+                <td>' . $groups->section . '</td>
+                <td>' . $groups->course . '</td>
+                </tr>';
+            }
+        }
+        else
+        {
+            $output = 
+            '<tr>
+            <td class="text-center" colspan="5">Group does not exist</td>
             </tr>';
         }
 
