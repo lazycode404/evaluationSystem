@@ -36,6 +36,7 @@ Route::prefix('/')->middleware(['auth', 'user'])->group(function () {
     Route::get('home/{course_name}/{section_name}/{group_name}', [App\Http\Controllers\HomeController::class, 'viewGroupPost']);
 
     Route::get('home/{course_name}/{section_name}/{group_name}/title_evalutaion', [App\Http\Controllers\HomeController::class, 'viewTitleEval']);
+    Route::get('home/{course_name}/{section_name}/{group_name}/final_evaluation', [App\Http\Controllers\HomeController::class, 'viewFinalEval']);
 
     Route::post('home/{course_name}/{section_name}/{group_name}/title_evalutaion/submitted', [App\Http\Controllers\HomeController::class, 'storeTitleEval']);
 

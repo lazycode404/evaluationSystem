@@ -160,4 +160,20 @@ class HomeController extends Controller
             
         }
     }
+
+    public function viewFinalEval($course_name, $section_name, $group_name)
+    {
+        $courses = Course::where('Coursename', $course_name)->where('status', 1)->first();
+        $section = Section::where('Sectionname', $section_name)->where('status', 1)->first();
+        $group = GroupModel::where('name', $group_name)->where('status', 1)->first();
+
+
+        if ($group && $section && $courses) {
+            $member = Member::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('groupName', $group->name)
+                ->where('status', 1)->first();
+            return view('evaluation.final_evaluation', compact('group', 'member', 'courses', 'section'));
+        }
+    }
 }

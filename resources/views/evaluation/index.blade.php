@@ -94,7 +94,7 @@
                                 <h5>Final Evaluation <br> Sheet</h5>
                                 <small class="section"></small>
                             </b>
-                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name) }}"
+                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation') }}"
                                 class="btn btn-primary">Select</a>
                         </div>
                     </div>
