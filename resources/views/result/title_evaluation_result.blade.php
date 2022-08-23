@@ -65,6 +65,20 @@
     .sm {
         font-size: 12px;
     }
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        @page {
+            size: A4;
+        }
+
+        .printable,
+        .printable * {
+            visibility: visible;
+        }
+    }
 </style>
 @section('content')
     <!-- Content Header (Page header) -->
@@ -76,8 +90,8 @@
                         class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    </ol>
+                    <button onclick="window.print();" class="btn btn-success btn-sm print float-sm-right"><i class="fa fa-print"
+                        aria-hidden="true"></i>Print</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -88,7 +102,7 @@
         <div class="container">
             <div class="card">
                 <!-- /.card-header -->
-                <div class="card-body">
+                <div class="card-body printable">
 
                     <table id="example2" class="table">
                         <tr class="trow">

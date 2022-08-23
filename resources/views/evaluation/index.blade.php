@@ -67,11 +67,11 @@
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <!-- /.col-md-6 -->
-                <div class="col-lg-6 col-4">
+                <div class="col-lg-4 col-4">
                     <div class="card text-center" style="width: 18rem;">
                         <div class="card-body">
                             <b>
-                                <h5>Title Evaluation Proposal Sheet</h5>
+                                <h5>Title Proposal Evaluation Proposal Sheet</h5>
                                 <small class="section"></small>
                             </b>
                             @if ($viewbtnresult == null)
@@ -87,11 +87,26 @@
                 <!-- /.col-md-6 -->
 
                 <!-- /.col-md-6 -->
-                <div class="col-lg-6 col-4">
+                <div class="col-lg-4 col-4">
                     <div class="card text-center" style="width: 18rem;">
                         <div class="card-body">
                             <b>
-                                <h5>Research Proposal <br>Final Evaluation Sheet</h5>
+                                <h5>Oral Defense Evaluation Sheet</h5>
+                                <small class="section"></small>
+                            </b>
+                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/oral_evaluation') }}"
+                                class="btn btn-primary">Select</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-6 -->
+
+                <!-- /.col-md-6 -->
+                <div class="col-lg-4 col-4">
+                    <div class="card text-center" style="width: 18rem;">
+                        <div class="card-body">
+                            <b>
+                                <h5>Research Proposal Final Evaluation Sheet</h5>
                                 <small class="section"></small>
                             </b>
                             <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation') }}"
