@@ -189,7 +189,6 @@
                                         below 70 = Poor/Failed <br>
                                     </p>
                                 </div>
-
                             </div>
                         </tr>
                         <tr>
