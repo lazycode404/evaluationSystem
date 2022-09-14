@@ -60,13 +60,20 @@
 
     @include('layouts.components.flashmessages')
     <div class="container-fluid mb-5">
-        <h3 class="text-center">{{ $group->capstoneTitle }}</h3>
+        <h2 class="text-center"><b>{{ $group->capstoneTitle }}</b></h2>
+        <p class="text-center">
+            @foreach ($member as $member)
+                {{ $loop->first ? ' ' : ' , ' }}
+                {{ $member->firstname }} {{ $member->lastname }}
+            @endforeach
+        </p>
     </div>
 
     <div class="content">
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <!-- /.col-md-6 -->
+                @if($groupby > 0)
                 <div class="col-lg-4 col-4">
                     <div class="card text-center" style="width: 18rem;">
                         <div class="card-body">
@@ -78,7 +85,7 @@
                                 <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/title_evalutaion') }}"
                                     class="btn btn-primary">Select</a>
                             @else
-                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName . '/title_evalutaion/result') }}"
+                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/title_evalutaion/result') }}"
                                     class="btn btn-primary">View Result</a>
                             @endif
                         </div>
@@ -109,11 +116,19 @@
                                 <h5>Research Proposal Final Evaluation Sheet</h5>
                                 <small class="section"></small>
                             </b>
-                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation') }}"
-                                class="btn btn-primary">Select</a>
+                            @if ($viewbtnresultFinal == null)
+                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation') }}"
+                                    class="btn btn-primary">Select</a>
+                            @else
+                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation/result') }}"
+                                    class="btn btn-primary">View Result</a>
+                            @endif
                         </div>
                     </div>
                 </div>
+                @else
+                    <h3>No members added please contact {{$group->name}} <small>({{$section->Sectionname}})</small> adviser!</h3>
+                @endif
                 <!-- /.col-md-6 -->
             </div>
             <!-- /.row -->

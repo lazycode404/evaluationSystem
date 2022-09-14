@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\finalEvalproposal;
 use App\Models\Member;
 use App\Models\Section;
 use App\Models\GroupModel;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\titleEvaluation;
 use Illuminate\Support\Facades\DB;
@@ -57,10 +59,8 @@ class HomeController extends Controller
                 ->where('section', $section->Sectionname)
                 ->where('status', 1)->get();
 
-            $member = Member::join('group','group.name','=', 'member.groupName')
-            ->get(['group.name as Gname','member.groupName as mName','member.members','group.capstoneTitle','group.status as gStatus','member.status as mStatus']);
-    
-            return view('group', compact('courses', 'section','group','member'));
+
+            return view('group')->with(['courses' => $courses, 'section' => $section, 'group' => $group]);
         }
     }
 
@@ -72,18 +72,26 @@ class HomeController extends Controller
         $evaluator = Auth::user()->name;
 
         if ($group && $section && $courses) {
-            $member = Member::where('course', $courses->Coursename)
+            $member = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)->get();
+
+            $viewbtnresult = titleEvaluation::where('evaluator', $evaluator)
                 ->where('section', $section->Sectionname)
                 ->where('groupName', $group->name)
-                ->where('status', 1)->first();
+                ->where('course', $courses->Coursename)
+                ->where('capstoneTitle', $group->capstoneTitle)->first();
 
-                $viewbtnresult = titleEvaluation::where('evaluator',$evaluator)
-                ->where('section',$section->Sectionname)
-                ->where('groupName',$group->name)
-                ->where('course',$courses->Coursename)
-                ->where('capstoneTitle',$group->capstoneTitle)->first();
-
-            return view('evaluation.index', compact('group', 'member', 'courses', 'section','viewbtnresult'));
+            $viewbtnresultFinal = finalEvalproposal::where('evaluator', $evaluator)
+                ->where('section', $section->Sectionname)
+                ->where('groupName', $group->name)
+                ->where('course', $courses->Coursename)
+                ->where('capstoneTitle', $group->capstoneTitle)->first();
+            
+            $groupby = Student::where('group',$group->name)->count();
+            //dd($groupby);
+            return view('evaluation.index', compact('group', 'member', 'courses', 'section', 'viewbtnresult', 'viewbtnresultFinal','groupby'));
         }
     }
 
@@ -95,11 +103,20 @@ class HomeController extends Controller
 
 
         if ($group && $section && $courses) {
-            $member = Member::where('course', $courses->Coursename)
+            $member = Student::where('course', $courses->Coursename)
                 ->where('section', $section->Sectionname)
-                ->where('groupName', $group->name)
-                ->where('status', 1)->first();
-            return view('evaluation.title_evaluation', compact('group', 'member', 'courses', 'section'));
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+
+            $individual = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+            return view('evaluation.title_evaluation', compact('group', 'member', 'courses', 'section', 'individual'));
         }
     }
 
@@ -110,11 +127,22 @@ class HomeController extends Controller
         $group = GroupModel::where('name', $group_name)->where('status', 1)->first();
 
         if ($courses && $section && $group) {
-            $member = Member::where('course', $courses->Coursename)
+            $member = Student::where('course', $courses->Coursename)
                 ->where('section', $section->Sectionname)
-                ->where('groupName', $group->name)
-                ->where('status', 1)->first();
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+
             $titleEvaluation = new titleEvaluation();
+
+            $lastname = $request->input('name');
+            $grade = $request->input('grade');
+
+
+            foreach ($lastname as $key => $n) {
+                DB::table('student')->where('id', $lastname[$key])->update(array('titleProposalGrade' => $grade[$key]));
+            }
 
             $evaluator = Auth::user()->name;
             $groupName = $group->name;
@@ -156,8 +184,7 @@ class HomeController extends Controller
             $titleEvaluation->equivalent = $equivalent;
             $titleEvaluation->save();
 
-            return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName . '/title_evalutaion/submitted')->with( ['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section] );
-            
+            return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/title_evalutaion/result')->with(['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section]);
         }
     }
 
@@ -169,11 +196,114 @@ class HomeController extends Controller
 
 
         if ($group && $section && $courses) {
-            $member = Member::where('course', $courses->Coursename)
+            $member = Student::where('course', $courses->Coursename)
                 ->where('section', $section->Sectionname)
-                ->where('groupName', $group->name)
-                ->where('status', 1)->first();
-            return view('evaluation.final_evaluation', compact('group', 'member', 'courses', 'section'));
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+
+            $individual = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+            return view('evaluation.final_evaluation', compact('group', 'member', 'courses', 'section','individual'));
+        }
+    }
+
+    public function storeFinalEval(Request $request, $course_name, $section_name, $group_name)
+    {
+        $courses = Course::where('Coursename', $course_name)->where('status', 1)->first();
+        $section = Section::where('Sectionname', $section_name)->where('status', 1)->first();
+        $group = GroupModel::where('name', $group_name)->where('status', 1)->first();
+
+        if ($courses && $section && $group) {
+            $member = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)->get();
+
+            $finalEvaluation = new finalEvalproposal();
+
+            $evaluator = Auth::user()->name;
+            $groupName = $group->name;
+            $capstoneTitle = $group->capstoneTitle;
+            $evalsection = $section->Sectionname;
+            $evalcourse = $courses->Coursename;
+
+            $lastname = $request->input('name');
+            $grade = $request->input('grade');
+
+
+            foreach ($lastname as $key => $n) {
+                DB::table('student')->where('id', $lastname[$key])->update(array('finalProposalGrade' => $grade[$key]));
+            }
+
+            $recommendation = $request->input('recommendation');
+
+            $finalEvaluation->evaluator = $evaluator;
+            $finalEvaluation->groupName = $groupName;
+            $finalEvaluation->capstoneTitle = $capstoneTitle;
+            $finalEvaluation->section = $evalsection;
+            $finalEvaluation->course = $evalcourse;
+            $finalEvaluation->recommendation = $recommendation;
+
+
+            //CHAPTER 1
+            $finalEvaluation->CH1Q1 = $request->input('CH1Q1');
+            $finalEvaluation->CH1Q2 = $request->input('CH1Q2');
+            $finalEvaluation->CH1Q3 = $request->input('CH1Q3');
+            $finalEvaluation->CH1Q4 = $request->input('CH1Q4');
+            $finalEvaluation->CH1Q5 = $request->input('CH1Q5');
+            $finalEvaluation->CH1Q6 = $request->input('CH1Q6');
+            $finalEvaluation->CH1Q7 = $request->input('CH1Q7');
+            $finalEvaluation->CH1Q8 = $request->input('CH1Q8');
+
+            //CHAPTER 2
+            $finalEvaluation->CH2Q1 = $request->input('CH2Q1');
+            $finalEvaluation->CH2Q2 = $request->input('CH2Q2');
+            $finalEvaluation->CH2Q3 = $request->input('CH2Q3');
+            $finalEvaluation->CH2Q4 = $request->input('CH2Q4');
+            $finalEvaluation->CH2Q5 = $request->input('CH2Q5');
+            $finalEvaluation->CH2Q6 = $request->input('CH2Q6');
+            $finalEvaluation->CH2Q7 = $request->input('CH2Q7');
+            $finalEvaluation->CH2Q8 = $request->input('CH2Q8');
+            $finalEvaluation->CH2Q9 = $request->input('CH2Q9');
+
+            //CHAPTER 3
+            $finalEvaluation->CH3Q1 = $request->input('CH3Q1');
+            $finalEvaluation->CH3Q2 = $request->input('CH3Q2');
+            $finalEvaluation->CH3Q3 = $request->input('CH3Q3');
+            $finalEvaluation->CH3Q4 = $request->input('CH3Q4');
+            $finalEvaluation->CH3Q5 = $request->input('CH3Q5');
+            $finalEvaluation->CH3Q6 = $request->input('CH3Q6');
+            $finalEvaluation->CH3Q7 = $request->input('CH3Q7');
+            $finalEvaluation->CH3Q8 = $request->input('CH3Q8');
+            $finalEvaluation->CH3Q9 = $request->input('CH3Q9');
+            $finalEvaluation->CH3Q10 = $request->input('CH3Q10');
+            $finalEvaluation->CH3Q11 = $request->input('CH3Q11');
+
+            //CHAPTER 4
+            $finalEvaluation->CH4Q1 = $request->input('CH4Q1');
+            $finalEvaluation->CH4Q2 = $request->input('CH4Q2');
+            $finalEvaluation->CH4Q3 = $request->input('CH4Q3');
+            $finalEvaluation->CH4Q4 = $request->input('CH4Q4');
+            $finalEvaluation->CH4Q5 = $request->input('CH4Q5');
+            $finalEvaluation->CH4Q6 = $request->input('CH4Q6');
+            $finalEvaluation->CH4Q7 = $request->input('CH4Q7');
+            $finalEvaluation->CH4Q8 = $request->input('CH4Q8');
+            $finalEvaluation->CH4Q9 = $request->input('CH4Q9');
+
+            //CHAPTER 5
+            $finalEvaluation->CH5Q1 = $request->input('CH5Q1');
+            $finalEvaluation->CH5Q2 = $request->input('CH5Q2');
+            $finalEvaluation->CH5Q3 = $request->input('CH5Q3');
+
+            $finalEvaluation->save();
+
+            return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation/result')->with(['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section]);
         }
     }
 }

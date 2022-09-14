@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('member', function (Blueprint $table) {
+        Schema::create('student', function (Blueprint $table) {
             $table->id();
-            $table->string('members');
-            $table->string('groupName');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('section');
             $table->string('course');
+            $table->string('group');
+            $table->float('titleProposalGrade')->nullable();
+            $table->float('oralProposalGrade')->nullable();
+            $table->float('finalProposalGrade')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member');
+        Schema::dropIfExists('student');
     }
 };

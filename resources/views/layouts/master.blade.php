@@ -13,8 +13,8 @@
 
     {{-- ADMIN LTE ASSETS --}}
     <link rel="stylesheet" href="{{ asset('assets/extras/fontsgoogleapis.css') }}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
@@ -44,6 +44,10 @@
     <link rel="stylesheet"
         href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     {{-- SWITCHER --}}
     <link href="{{ asset('assets/extras/bootstrap-toggle.min.css') }}" rel="stylesheet">
@@ -154,6 +158,7 @@
 
     <script src="{{ asset('assets/extras/bootstrap-toggle.min.js') }}"></script>
     <script src="{{ asset('assets/extras/toastr.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 
     @yield('scripts')
     <script>
@@ -168,7 +173,13 @@
                 "responsive": true,
             });
         });
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
     </script>
 </body>
 

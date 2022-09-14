@@ -61,7 +61,8 @@
         float: left;
         width: 50%;
     }
-    .sm{
+
+    .sm {
         font-size: 12px;
     }
 </style>
@@ -122,7 +123,11 @@
                             </tr>
                             <tr class="trow">
                                 <td class="tdow" style="text-align: right;" colspan="1"></td>
-                                <td class="tdow"><b style="margin-right: 35px;">Name of Ratee: </b>{{ $member->members }}
+                                <td class="tdow"><b style="margin-right: 35px;">Name of Ratee: </b>
+                                    @foreach ($member as $member)
+                                        {{ $loop->first ? ' ' : ' , ' }}
+                                        {{ $member->firstname }} {{ $member->lastname }}
+                                    @endforeach
                                 </td>
                                 <td class="tdow" style="text-align: center;" colspan="1"></td>
                             </tr>
@@ -146,32 +151,35 @@
                                         <tr>
                                             <td>1. Organization of presentation (topical arrangement)</td>
                                             <td style="text-align: center;">20</td>
-                                            <td style="text-align: center;"><input name="q1" type="number" min="0" max="20" class="form-control"
-                                                    size="1"></td>
+                                            <td style="text-align: center;"><input name="q1" type="number"
+                                                    min="0" max="20" class="form-control" size="1"></td>
                                         </tr>
                                         <tr>
                                             <td>2. Content of the presentation (depth of the information presented)</td>
                                             <td style="text-align: center;">35</td>
-                                            <td style="text-align: center;"><input name="q2" type="number" min="0" max="35" class="form-control"
-                                                    size="1"></td>
+                                            <td style="text-align: center;"><input name="q2" type="number"
+                                                    min="0" max="35" class="form-control" size="1"></td>
                                         </tr>
                                         <tr>
                                             <td>3. Composure/Personality (stage presence, attire, projection)</td>
                                             <td style="text-align: center;">5</td>
-                                            <td style="text-align: center;"><input name="q3" type="number" min="0" max="5" class="form-control"
-                                                    size="1"></td>
+                                            <td style="text-align: center;"><input name="q3" type="number"
+                                                    min="0" max="5" class="form-control" size="1">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>4. Delivery (voice quality, visual aids)</td>
                                             <td style="text-align: center;">10</td>
-                                            <td style="text-align: center;"><input name="q4" type="number" min="0" max="10" class="form-control"
-                                                    size="1"></td>
+                                            <td style="text-align: center;"><input name="q4" type="number"
+                                                    min="0" max="10" class="form-control" size="1">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>5. Answers to questions</td>
                                             <td style="text-align: center;">30</td>
-                                            <td style="text-align: center;"><input name="q5" type="number" min="0" max="30" class="form-control"
-                                                    size="1"></td>
+                                            <td style="text-align: center;"><input name="q5" type="number"
+                                                    min="0" max="30" class="form-control" size="1">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -211,6 +219,18 @@
                         </table>
                 </div>
                 <!-- /.card-body -->
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Individual Grading</h2>
+                    @foreach ($individual as $indimember)
+                        <div class="form-group">
+                            <label for="name">{{$indimember->firstname}} {{$indimember->lastname}}</label>
+                            <input type="hidden" class="form-control" name="name[]" id="name" value="{{$indimember->id}}">
+                            <input type="number" name="grade[]" placeholder="Enter grade"  class="form-control">
+                        </div>
+                    @endforeach
+                </div>
             </div>
             <div class="col text-center">
                 <button type="submit" class="btn btn-primary mb-5 ">SUBMIT</button>

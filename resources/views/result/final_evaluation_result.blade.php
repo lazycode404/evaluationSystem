@@ -4,6 +4,16 @@
     Evaluation System
 @endsection
 
+<style>
+    .rowcontent {
+        text-align: center;
+    }
+
+    .col-lg-4 {
+        display: inline-block;
+    }
+</style>
+
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
     <div class="container">
         <ul class="navbar-nav ml-auto">
@@ -29,8 +39,16 @@
     </div>
     </div>
 </nav>
-
 <style>
+
+    .trow {
+        border: none !important;
+    }
+
+    .tdow {
+        border: none !important;
+    }
+
     .trow {
         border: none !important;
     }
@@ -64,37 +82,22 @@
         margin-left: 100px;
     }
 
+
     @media print {
-        tr.headers {
-            background-color: #5BC85B !important;
-            -webkit-print-color-adjust: exact;
+        body * {
+            visibility: hidden;
         }
 
         @page {
             size: A4;
-            margin-top: 18mm;
-            margin-bottom: 18mm;
-
         }
 
-        textarea {
-            visibility: hidden;
-        }
-
-        .leftimage {
-            margin-left: 5px;
-        }
-
-        .add {
-            margin-left: 120px;
-        }
-
-        .rightimage {
-            margin-left: 130px;
+        .printable,
+        .printable * {
+            visibility: visible;
         }
     }
 </style>
-
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -105,8 +108,8 @@
                         class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    </ol>
+                    <button onclick="window.print();" class="btn btn-success btn-sm print float-sm-right"><i
+                            class="fa fa-print" aria-hidden="true"></i>Print</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -114,12 +117,9 @@
     <!-- /.content-header -->
 
     <div class="container-fluid">
-        <div class="card eval py-5">
-            <!-- /.card-header -->
-            <form
-                action="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation/submitted') }}"
-                method="POST">
-                @csrf
+        <div class="container">
+            <div class="card">
+                <!-- /.card-header -->
                 <div class="card-body printable">
                     <table id="example2" class="table">
                         <tr class="trow">
@@ -148,9 +148,9 @@
                         </tr>
                         <tr class="trow">
                             <td class="tdow" colspan="3"><b style="margin-right: 25px;">Name of the Proponent/s:</b>
-                                @foreach ($member as $member)
-                                    {{ $loop->first ? ' ' : ' , ' }}
-                                    {{ $member->firstname }} {{ $member->lastname }}
+                                @foreach($member as $member)
+                                {{ $loop->first ? ' ' : ' , ' }}
+                                    {{ $member->firstname }} {{$member->lastname}}
                                 @endforeach
                             <td class="tdow" colspan="2"><b>Data of Evaluation:</b> {{ date('m/d/Y') }}</td>
                         </tr>
@@ -162,7 +162,7 @@
                             <td class="tdow" colspan="5"><b>Recommendation/s:</b> </td>
                         </tr>
                         <td class="tdow" colspan="5">
-                            <textarea name="recommendation" id="" class="form-control" placeholder="Type your recommendation" required></textarea>
+                            <p>{{$viewbtnresultFinal->recommendation}}</p>
                         </td>
                         <tr class="trow">
                             <th class="tdow" colspan="5">
@@ -199,54 +199,38 @@
                                     <td class="insideTD" style="padding-left: 10px">• Background of the study clearly
                                         explained
                                         the need for the study</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q1" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q2 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Gap in the literature related to the
                                         specified topic identified</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q2" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q3 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The problem is researchable, clear
                                         and
                                         concise</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q3" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q4 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The problem stated is feasible and
                                         researcher’s motivation and interest demonstrated</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q4" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q4 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q4 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q4 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q4 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Significance of the
@@ -260,52 +244,36 @@
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The reason why the study needs to be
                                         conducted is explained</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q5" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q5 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q5 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q5 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q5 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q6 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The problem indicates practical
                                         significance or value to several stakeholders</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q6" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q6 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q6 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q6 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q6 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q7 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Scope and Limitations</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q7" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q7 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q7 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q7 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q7 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH1Q8 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Specifies and properly explains the
                                         scope and delimitations</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH1Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH1Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH1Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH1Q8" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q8 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q8 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q8 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH1Q8 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
 
 
@@ -324,67 +292,47 @@
                                     <td class="insideTD" style="padding-left: 10px">• Sufficient overview of relevant
                                         research
                                         in particular area is provided</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q1" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH2Q2 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Evidence of scholarly skills and
                                         awareness of recent development in the area is shown previous research/own</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q2" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH2Q3 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Relationship of the problem to
                                         previous
                                         research/literature is made clear</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q3" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH2Q4 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Arranged related topics thematically
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q4" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q4 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q4 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q4 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q4 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH2Q5 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Present the synthesis thoroughly
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q5" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q5 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q5 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q5 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q5 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">
@@ -399,27 +347,19 @@
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Appropriate and essential theory /
                                         concept / phenomenon is clearly stated and systematically integrated</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q6" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q6 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q6 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q6 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q6 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH2Q7 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Research questions support the main
                                         problem</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q7" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q7 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q7 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q7 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q7 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Statement of
@@ -435,14 +375,10 @@
                                         stated with empirical referents (Qualitative Research has no hypothesis, only
                                         assumption
                                         if necessary)</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q8" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q8 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q8 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q8 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q8 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Definition of Terms
@@ -459,14 +395,10 @@
                                         are correctly identified (Variables in Qualitative research are called phenomena and
                                         it
                                         can only have one or two independent variables)</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH2Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH2Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH2Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH2Q9" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q9 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q9 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q9 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH2Q9 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
 
 
@@ -494,14 +426,10 @@
                                     <td class="insideTD" style="padding-left: 10px">• Described clearly and appropriate to
                                         the
                                         problem</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q1" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Research Locale
@@ -515,14 +443,10 @@
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The location is clearly specified
                                         including these reasons for the selection</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q2" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Research Design
@@ -537,26 +461,18 @@
                                     <td class="insideTD" style="padding-left: 10px">• It is appropriate and clearly
                                         described
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q3" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH3Q4 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Adequate sample is determined</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q4" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q4 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q4 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q4 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q4 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Research
@@ -571,28 +487,20 @@
                                     <td class="insideTD" style="padding-left: 10px">• Research Instrument is appropriate
                                         and
                                         clearly described</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q5" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q5 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q5 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q5 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q5 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH3Q6 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Validity and Reliability of
                                         instruments
                                         are properly established</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q6" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q6 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q6 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q6 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q6 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Data Collection
@@ -605,27 +513,19 @@
                                 {{-- CH3Q7 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Procedure is fully described</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q7" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q7 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q7 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q7 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q7 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH3Q8 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Procedure is appropriate to research
                                         design</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q8" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q8 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q8 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q8 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q8 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Statistical
@@ -641,40 +541,28 @@
                                     <td class="insideTD" style="padding-left: 10px">• Appropriate, clear and objectively
                                         specified (in qualitative research it is called Content Analysis – use coding and
                                         triangulation)</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q9" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q9 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q9 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q9 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q9 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH3Q10 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Ethical Consideration</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q10" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q10" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q10" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q10" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q10 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q10 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q10 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q10 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH3Q11 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• All relevant aspects of ethical
                                         considerations are well observed and established from the start to the end of the
                                         research </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH3Q11" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH3Q11" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH3Q11" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH3Q11" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q11 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q11 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q11 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH3Q11 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
 
 
@@ -695,123 +583,87 @@
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The research methodology is highly
                                         suitable or achieving the study objectives</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q1" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q2 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Procedures are described in great
                                         detail
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q2" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q3 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The selected methods for data
                                         analysis
                                         are highly suitable</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q3" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q4 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The research methodology is good for
                                         achieving the study objectives</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q4" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q4" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q4 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q4 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q4 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q4 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q5 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Procedures are described in details
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q5" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q5" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q5 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q5 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q5 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q5 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q6 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The selected methods for data
                                         analysis
                                         are good</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q6" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q6" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q6 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q6 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q6 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q6 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q7 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The research methodology is
                                         satisfactory
                                         for achieving the study objectives</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q7" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q7" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q7 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q7 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q7 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q7 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q8 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• Procedures are described in general
                                         terms</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q8" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q8" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q8 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q8 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q8 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q8 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 {{-- CH4Q9 --}}
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The selected methods for data
                                         analysis
                                         are suitable</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH4Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH4Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH4Q9" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH4Q9" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q9 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q9 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q9 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH4Q9 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
 
 
@@ -838,14 +690,10 @@
                                     <td class="insideTD" style="padding-left: 10px">• The expected key findings of the
                                         study
                                         are very clearly stated</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH5Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH5Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH5Q1" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH5Q1" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Conclusions</td>
@@ -858,14 +706,10 @@
                                 <tr>
                                     <td class="insideTD" style="padding-left: 10px">• The expected findings are highly
                                         consistent with the objectives of the study</td>
-                                    <td class="insideTD text-center"><input value="4" name="CH5Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH5Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH5Q2" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH5Q2" type="radio"
-                                            required></td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                        <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                                 <tr>
                                     <td class="insideTD" style="font-weight: bold; padding-left: 10px">Recommendations
@@ -880,14 +724,10 @@
                                     <td class="insideTD" style="padding-left: 10px">• The recommendations are clearly
                                         stated
                                     </td>
-                                    <td class="insideTD text-center"><input value="4" name="CH5Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="3" name="CH5Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="2" name="CH5Q3" type="radio"
-                                            required></td>
-                                    <td class="insideTD text-center"><input value="1" name="CH5Q3" type="radio"
-                                            required></td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                                    <td class="insideTD text-center">@if($viewbtnresultFinal->CH5Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
                             </table>
                             <div class="row p-3">
@@ -909,26 +749,7 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h2 class="text-center">Individual Grading</h2>
-                @foreach ($individual as $indimember)
-                    <div class="form-group">
-                        <label for="name">{{ $indimember->firstname }} {{ $indimember->lastname }}</label>
-                        <input type="hidden" class="form-control" name="name[]" id="name"
-                            value="{{ $indimember->id }}">
-                        <input type="number" name="grade[]" placeholder="Enter grade" class="form-control">
-                    </div>
-                @endforeach
             </div>
         </div>
-        <div class="col text-center">
-            <button type="submit" class="btn btn-primary mb-5">SUBMIT</button>
-        </div>
-        </form>
     </div>
-@endsection
-
-@section('scripts')
 @endsection

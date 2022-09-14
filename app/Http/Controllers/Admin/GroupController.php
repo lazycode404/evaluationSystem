@@ -93,8 +93,11 @@ class GroupController extends Controller
 
         if($groupSearch != '')
         {
-            $group = GroupModel::where('status',0)
-            ->where('name', 'like', '%' . $groupSearch . '%')
+            $group = GroupModel::where(function($query) use ($groupSearch){
+                $query->where('name', 'LIKE', '%' . $groupSearch . '%')
+                ->orWhere('capstoneTitle', 'LIKE', '%' . $groupSearch . '%');
+            })
+            ->where('status',0)
             ->get();
         }
         else

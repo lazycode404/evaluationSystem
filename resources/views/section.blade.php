@@ -67,9 +67,8 @@
                                 <div class="card text-center" style="width: 18rem;">
                                     <div class="card-body">
                                         <b>
-                                            <h5>{{ $section->Sectionname }}</h5>
+                                            <h2>{{ $section->description }}</h2>
                                         </b>
-                                        <p class="card-text">{{ Str::upper($section->description) }}.</p>
                                         <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname) }}"
                                             class="btn btn-primary">Select</a>
                                     </div>

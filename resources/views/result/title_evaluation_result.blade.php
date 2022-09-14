@@ -65,6 +65,7 @@
     .sm {
         font-size: 12px;
     }
+
     @media print {
         body * {
             visibility: hidden;
@@ -86,12 +87,12 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->groupName) }}"
+                    <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name) }}"
                         class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO BACK</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <button onclick="window.print();" class="btn btn-success btn-sm print float-sm-right"><i class="fa fa-print"
-                        aria-hidden="true"></i>Print</button>
+                    <button onclick="window.print();" class="btn btn-success btn-sm print float-sm-right"><i
+                            class="fa fa-print" aria-hidden="true"></i>Print</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -107,7 +108,7 @@
                     <table id="example2" class="table">
                         <tr class="trow">
                             <td class="tdow" style="text-align: center;" colspan=""><img
-                                    src=" {{ asset('assets/images/tagslogo.png') }} " height="90" alt="">
+                                    src=" {{ asset('assets/images/tagslogo.png') }} " height="100" alt="">
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1">
                                 <p>
@@ -119,7 +120,7 @@
                                 </p>
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1"><img
-                                    src="{{ asset('assets/images/cctlogo.png') }}" height="90" alt=""></td>
+                                    src="{{ asset('assets/images/cctlogo.png') }}" height="100" alt=""></td>
                         </tr>
                         <tr class="trow">
                             <td class="tdow" colspan="1"></td>
@@ -134,7 +135,11 @@
                         </tr>
                         <tr class="trow">
                             <td class="tdow" style="text-align: right;" colspan="1"></td>
-                            <td class="tdow"><b style="margin-right: 35px;">Name of Ratee: </b>{{ $member->members }}
+                            <td class="tdow"><b style="margin-right: 35px;">Name of Ratee: </b>
+                                @foreach ($member as $member)
+                                    {{ $loop->first ? ' ' : ' , ' }}
+                                    {{ $member->firstname }} {{ $member->lastname }}
+                                @endforeach
                             </td>
                             <td class="tdow" style="text-align: center;" colspan="1"></td>
                         </tr>
@@ -158,27 +163,27 @@
                                     <tr>
                                         <td>1. Organization of presentation (topical arrangement)</td>
                                         <td style="text-align: center;">20</td>
-                                        <td style="text-align: center;">{{$viewbtnresult->Q1}}</td>
+                                        <td style="text-align: center;">{{ $viewbtnresult->Q1 }}</td>
                                     </tr>
                                     <tr>
                                         <td>2. Content of the presentation (depth of the information presented)</td>
                                         <td style="text-align: center;">35</td>
-                                        <td style="text-align: center;">{{$viewbtnresult->Q2}}</td>
+                                        <td style="text-align: center;">{{ $viewbtnresult->Q2 }}</td>
                                     </tr>
                                     <tr>
                                         <td>3. Composure/Personality (stage presence, attire, projection)</td>
                                         <td style="text-align: center;">5</td>
-                                        <td style="text-align: center;">{{$viewbtnresult->Q3}}</td>
+                                        <td style="text-align: center;">{{ $viewbtnresult->Q3 }}</td>
                                     </tr>
                                     <tr>
                                         <td>4. Delivery (voice quality, visual aids)</td>
                                         <td style="text-align: center;">10</td>
-                                        <td style="text-align: center;">{{$viewbtnresult->Q4}}</td>
+                                        <td style="text-align: center;">{{ $viewbtnresult->Q4 }}</td>
                                     </tr>
                                     <tr>
                                         <td>5. Answers to questions</td>
                                         <td style="text-align: center;">30</td>
-                                        <td style="text-align: center;">{{$viewbtnresult->Q5}}</td>
+                                        <td style="text-align: center;">{{ $viewbtnresult->Q5 }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -188,14 +193,14 @@
                                         <td></td>
                                         <td><b>Numerical: </b></td>
                                         <td>
-                                            <p class="numerical">{{$viewbtnresult->numerical}}</p>
+                                            <p class="numerical">{{ $viewbtnresult->numerical }}</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td><b>Equivalent: </b></td>
                                         <td>
-                                            <p class="equivalent">{{$viewbtnresult->equivalent}}</p>
+                                            <p class="equivalent">{{ $viewbtnresult->equivalent }}</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -212,7 +217,7 @@
                                         below 70 = Poor/Failed <br>
                                     </p>
                                 </div>
-                                
+
                             </div>
                             <br>
                         </tr>

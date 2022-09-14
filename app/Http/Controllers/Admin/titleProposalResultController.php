@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Member;
-use App\Models\titleEvaluation;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\titleEvaluation;
+use App\Http\Controllers\Controller;
 
 class titleProposalResultController extends Controller
 {
@@ -20,7 +21,7 @@ class titleProposalResultController extends Controller
     {
         $result = titleEvaluation::where('id',$id)->first();
         
-        $member = Member::where('groupName',$result->groupName)->first();
+        $member = Student::where('group',$result->groupName)->get();
 
         return view('adviser.result.title_evaluation_result', compact('result','member'));
     }

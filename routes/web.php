@@ -43,6 +43,11 @@ Route::prefix('/')->middleware(['auth', 'user'])->group(function () {
     Route::get('home/{course_name}/{section_name}/{group_name}/title_evalutaion/submitted', [App\Http\Controllers\Result::class, 'submittedIndex']);
 
     Route::get('home/{course_name}/{section_name}/{group_name}/title_evalutaion/result', [App\Http\Controllers\Result::class, 'resultIndex']);
+
+    Route::post('home/{course_name}/{section_name}/{group_name}/final_evaluation/submitted', [App\Http\Controllers\HomeController::class, 'storeFinalEval']);
+    Route::get('home/{course_name}/{section_name}/{group_name}/final_evaluation/submitted', [App\Http\Controllers\Result::class, 'submittedIndex']);
+    Route::get('home/{course_name}/{section_name}/{group_name}/final_evaluation/result', [App\Http\Controllers\Result::class, 'finaleEvalResult']);
+    
 });
 
 //SYSTEM ADMIN WEBPAGE
@@ -79,36 +84,29 @@ Route::prefix('admin')->middleware(['auth', 'systemadmin'])->group(function () {
 
 Route::prefix('adviser')->middleware(['auth', 'adviser'])->group(function () {
 
-    // SYSTEM ADMIN DASHBOARD
+    //DASHBOARD
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'adviser']);
-    // SYSTEM ADMIN VIEW GROUP
+
+    //STUDENT
+    Route::get('/student', [App\Http\Controllers\Admin\StudentController::class, 'index']);
+    Route::post('student/create', [App\Http\Controllers\Admin\StudentController::class, 'store']);
+    Route::post('student/edit', [App\Http\Controllers\Admin\StudentController::class, 'studentupdateData']);
+    Route::post('student/update', [App\Http\Controllers\Admin\StudentController::class, 'studentupdateStatus']);
+    Route::post('student/unarchive',[App\Http\Controllers\Admin\StudentController::class, 'unarchive']);
+    Route::get('student/search', [App\Http\Controllers\Admin\StudentController::class, 'searchStudentdata'])->name('student.search');
+
+    // GROUP
     Route::get('/group', [App\Http\Controllers\Admin\GroupController::class, 'index']);
-    // SYSTEM ADMIN ADD GROUP
     Route::post('group/create', [App\Http\Controllers\Admin\GroupController::class, 'store']);
-    // UPDATE GROUP STATUS
     Route::post('group/update', [App\Http\Controllers\Admin\GroupController::class, 'groupupdateStatus']);
-    // UPDATE DATA GROUP
     Route::post('group/edit', [App\Http\Controllers\Admin\GroupController::class, 'groupupdateData']);
-
     Route::get('group/search', [App\Http\Controllers\Admin\GroupController::class, 'searchGroupdata'])->name('group.search');
-
     Route::post('group/unarchive',[App\Http\Controllers\Admin\GroupController::class, 'unarchive']);
     
 
-    // SYSTEM ADMIN VIEW MEMBER
-    Route::get('/member', [App\Http\Controllers\Admin\MemberController::class, 'index']);
-    // SYSTEM ADMIN ADD MEMBERS
-    Route::post('member/create', [App\Http\Controllers\Admin\MemberController::class, 'store']);
-    // UPDATE MEMBER STATUS
-    Route::post('member/update', [App\Http\Controllers\Admin\MemberController::class, 'memberupdateStatus'])->name('member.update.status');
-    // UPDATE DATA MEMBER
-    Route::post('member/edit', [App\Http\Controllers\Admin\MemberController::class, 'memberDataUpdate']);
-    Route::post('member/unarchived', [App\Http\Controllers\Admin\MemberController::class, 'unarchived']);
-
-    Route::get('member/search', [App\Http\Controllers\Admin\MemberController::class, 'searchMemberdata'])->name('member.search');
-
-    //SYSTEM ADMIN VIEW TITLE PROPOSAL RESULTS
+    //EVALUATION
     Route::get('/title_proposal_evaluation', [App\Http\Controllers\Admin\titleProposalResultController::class, 'index']);
-    // SYSTEM ADMIN VIEW RESULT BY GROUP
     Route::get('title_proposal_evaluation/{id}/result', [App\Http\Controllers\Admin\titleProposalResultController::class, 'viewresultBygroup']);
+    Route::get('/final_proposal_evaluation', [App\Http\Controllers\Admin\finalProposalResult::class, 'index']);
+    Route::get('/final_proposal_evaluation/{id}/result', [App\Http\Controllers\Admin\finalProposalResult::class, 'viewresultBygroup']);
 });

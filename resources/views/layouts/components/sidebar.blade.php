@@ -5,20 +5,25 @@
     <span class="brand-text font-weight-light">Evaluation System</span>
 </a>
 
+<style>
+    .finals {
+        font-size: 15px;
+    }
+</style>
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{asset('assets/dist/img/149071.png')}}" class="img-circle elevation-1" alt="User Image">
+            <img src="{{ asset('assets/dist/img/149071.png') }}" class="img-circle elevation-1" alt="User Image">
         </div>
         <div class="info">
             <a href="#" class="d-block">
-                {{Str::upper(Auth::user()->name)}}
+                {{ Str::upper(Auth::user()->name) }}
             </a>
-            @if(Auth::user()->role == 0)
-            <span class="text-success">SYSTEM ADMINISTRATOR</span>
+            @if (Auth::user()->role == 0)
+                <span class="text-success">SYSTEM ADMINISTRATOR</span>
             @elseif(Auth::user()->role == 1)
-            <span class="text-success">ADVISER</span>
+                <span class="text-success">ADVISER</span>
             @endif
         </div>
     </div>
@@ -66,16 +71,17 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/adviser/member"
-                        class="nav-link {{ 'adviser/member' == request()->path() ? 'active' : '' }}">
+                    <a href="/adviser/student"
+                        class="nav-link {{ 'adviser/student' == request()->path() ? 'active' : '' }}">
                         <i class="fa fa-users nav-icon"></i>
-                        <p>Member</p>
+                        <p>Student</p>
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('adviser/title_proposal_evaluation') ? 'active menu-open' : '' }}">
+                <li
+                    class="nav-item {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') ? 'active menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->is('adviser/title_proposal_evaluation') ? 'active menu-open' : '' }}">
+                        class="nav-link {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') ? 'active menu-open' : '' }}">
                         <i class="nav-icon fa fa-file-alt" aria-hidden="true"></i>
                         <p>
                             Evaluation Results
@@ -88,6 +94,15 @@
                                 class="nav-link {{ 'adviser/title_proposal_evaluation' == request()->path() ? 'active' : '' }}">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>Title Proposal Evaluation</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/adviser/final_proposal_evaluation"
+                                class="nav-link {{ 'adviser/final_proposal_evaluation' == request()->path() ? 'active' : '' }}">
+                                <i class="fa fa-circle nav-icon"></i>
+                                <p class="finals">Final Proposal Evaluation</p>
                             </a>
                         </li>
                     </ul>

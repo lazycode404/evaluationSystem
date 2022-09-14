@@ -22,6 +22,7 @@ class DashboardController extends Controller
 
         $totalGroup = DB::table('group')->count();
         $totalTItleEvalResult = DB::table('title_evaluation')->count();
-        return view('adviser.dashboard', compact('totalGroup','totalTItleEvalResult'));
+        $totalFinalEval = DB::table('final_eval_proposal')->count();
+        return view('adviser.dashboard', compact('totalGroup','totalTItleEvalResult','totalFinalEval'));
     }
 }

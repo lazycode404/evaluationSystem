@@ -66,28 +66,25 @@
     </div>
     <!-- /.content-header -->
 
-    <div class="content">
-        <div class="container d-flex justify-content-center">
-            <div class="row">
-                <!-- /.col-md-6 -->
-                @foreach ($member as $member)
-                    <div class="col-lg-4 col-4 mx-auto">
-                        <div class="card text-center" style="width: 18rem;">
-                            <div class="card-body">
-                                <b>
-                                    <h5>{{$member->capstoneTitle}}</h5>
-                                    <small class="section">{{ $section->Sectionname }}</small>
-                                </b>
-                                <p class="card-text">{{$member->members}}</p>
-                                <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $member->Gname) }}"
-                                    class="btn btn-primary">Select</a>
-                            </div>
+    <div class="container mt-4 justify-content-center">
+        <div class="row">
+            @foreach ($group as $key)
+                <div class="col-auto mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <b>
+                                <h4>{{ $key->capstoneTitle }}</h4>
+                            </b>
+                            <p class="card-text">{{ $key->name }}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $key->name) }}"
+                                class="btn btn-primary">Select</a>
                         </div>
                     </div>
-                @endforeach
-                <!-- /.col-md-6 -->
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+                </div>
+            @endforeach
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
 @endsection

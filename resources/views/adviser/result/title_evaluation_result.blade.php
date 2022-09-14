@@ -61,12 +61,11 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6 text-right">
-                    <button onclick="window.print();" class="btn btn-success btn-sm print"><i class="fa fa-print"
-                            aria-hidden="true"></i>Print</button>
+
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    </ol>
+                    <button onclick="window.print();" class="btn btn-success btn-sm print float-sm-right"><i
+                            class="fa fa-print" aria-hidden="true"></i>Print</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -75,9 +74,9 @@
 
     <div class="container-fluid">
         <div class="container">
-            <div class="card">
+            <div class="card printable">
                 <!-- /.card-header -->
-                <div class="card-body printable">
+                <div class="card-body ">
                     <table id="example2" class="table">
                         <tr class="trow">
                             <td class="tdow" style="text-align: center;" colspan="1"><img
@@ -112,7 +111,11 @@
                         <tr class="trow">
                             <td class="tdow" colspan="3"><b style="margin-right: 35px; margin-left:100px;">Name of
                                     Ratee:
-                                </b>{{ $member->members }}
+                                </b>
+                                @foreach ($member as $member)
+                                    {{ $loop->first ? ' ' : ' , ' }}
+                                    {{ $member->firstname }} {{ $member->lastname }}
+                                @endforeach
                             </td>
                         </tr>
                         <tr class="trow">
@@ -194,7 +197,6 @@
                         <tr>
                         </tr>
                     </table>
-
                 </div>
                 <!-- /.card-body -->
             </div>
