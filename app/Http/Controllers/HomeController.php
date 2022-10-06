@@ -250,6 +250,17 @@ class HomeController extends Controller
             $finalEvaluation->course = $evalcourse;
             $finalEvaluation->recommendation = $recommendation;
 
+            $chapter1 = $request->input('CH1Q1') + $request->input('CH1Q2') + $request->input('CH1Q3') + $request->input('CH1Q4') + $request->input('CH1Q5') + $request->input('CH1Q6') + $request->input('CH1Q7') + $request->input('CH1Q8');
+            $chapter2 = $request->input('CH2Q1') + $request->input('CH2Q2') + $request->input('CH2Q3') + $request->input('CH2Q4') + $request->input('CH2Q5') + $request->input('CH2Q6') + $request->input('CH2Q7') + $request->input('CH2Q8') + $request->input('CH2Q9');
+            $chapter3 = $request->input('CH3Q1') + $request->input('CH3Q2') + $request->input('CH3Q3') + $request->input('CH3Q4') + $request->input('CH3Q5') + $request->input('CH3Q6') + $request->input('CH3Q7') + $request->input('CH3Q8') + $request->input('CH3Q9') + $request->input('CH3Q10') + $request->input('CH3Q11');
+            $chapter4 = $request->input('CH4Q1') + $request->input('CH4Q2') + $request->input('CH4Q3') + $request->input('CH4Q4') + $request->input('CH4Q5') + $request->input('CH4Q6') + $request->input('CH4Q7') + $request->input('CH4Q8') + $request->input('CH4Q9');
+            $chapter5 = $request->input('CH5Q1') + $request->input('CH5Q2') + $request->input('CH5Q3');
+
+            $totalScore = $chapter1 + $chapter2 + $chapter3 + $chapter4 + $chapter5;
+
+            $meanScore = $totalScore / 160 * 100;
+
+
 
             //CHAPTER 1
             $finalEvaluation->CH1Q1 = $request->input('CH1Q1');
@@ -301,6 +312,10 @@ class HomeController extends Controller
             $finalEvaluation->CH5Q2 = $request->input('CH5Q2');
             $finalEvaluation->CH5Q3 = $request->input('CH5Q3');
 
+            $finalEvaluation->overallScore = $totalScore;
+            $finalEvaluation->meanScore = $meanScore;
+
+            // return $meanScore;
             $finalEvaluation->save();
 
             return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation/result')->with(['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section]);

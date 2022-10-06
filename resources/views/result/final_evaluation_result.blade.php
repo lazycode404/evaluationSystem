@@ -741,8 +741,8 @@
                                         style="margin-left: 84px">85 - 89</span> <br>
                                     <span style="margin-left: 70px">Re - Defense</span><span style="margin-left: 110px">84
                                         - below</span> <br><br>
-                                    <b>Overall Score: </b> <b style="margin-left: 50px">/160</b> <br>
-                                    <b>Mean Score: </b> <b style="margin-left:  20px"> </b>
+                                    <b>Overall Score: </b> <span style="margin-left: 20px">{{$viewbtnresultFinal->overallScore}} <b>/160</b></span> <br>
+                                    <b>Mean Score: </b> <b style="margin-left:  20px"> {{$viewbtnresultFinal->meanScore}} </b>
                                 </p>
                             </div>
                         </tr>
