@@ -119,7 +119,7 @@
                         </tr>
                         <tr class="trow">
                             <td class="tdow text-center" colspan="5">
-                                <b>RESEARCH PROPOSAL FINAL EVALUATION SHEET</b>
+                                <b>RESEARCH PROPOSAL EVALUATION SHEET</b>
                             </td>
                         </tr>
                         <tr class="trow">
@@ -540,171 +540,6 @@
                                         <td class="insideTD text-center">@if($result->CH3Q11 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                         <td class="insideTD text-center">@if($result->CH3Q11 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                                 </tr>
-
-
-
-
-                                {{-- CHAPTER 4 --}}
-                                <tr>
-                                    <td class="insideTD" style="font-weight: bold; padding-left: 10px">CHAPTER 4: RESULTS
-                                        AND
-                                        DISCUSSION
-                                    </td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                </tr>
-                                {{-- CH4Q1 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The research methodology is highly
-                                        suitable or achieving the study objectives</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q2 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• Procedures are described in great
-                                        detail
-                                    </td>
-                                    <td class="insideTD text-center">@if($result->CH4Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q3 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The selected methods for data
-                                        analysis
-                                        are highly suitable</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q4 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The research methodology is good for
-                                        achieving the study objectives</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q4 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q4 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q4 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q4 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q5 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• Procedures are described in details
-                                    </td>
-                                    <td class="insideTD text-center">@if($result->CH4Q5 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q5 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q5 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH4Q5 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q6 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The selected methods for data
-                                        analysis
-                                        are good</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q6 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q6 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q6 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q6 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q7 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The research methodology is
-                                        satisfactory
-                                        for achieving the study objectives</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q7 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q7 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q7 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q7 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q8 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• Procedures are described in general
-                                        terms</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q8 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q8 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q8 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q8 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                {{-- CH4Q9 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The selected methods for data
-                                        analysis
-                                        are suitable</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q9 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q9 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q9 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH4Q9 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-
-
-
-
-                                {{-- CHAPTER 5 --}}
-                                <tr>
-                                    <td class="insideTD" style="font-weight: bold; padding-left: 10px">CHAPTER 5: SUMMARY,
-                                        CONCLUSIONS, AND RECOMMMENDATIONS</td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                </tr>
-                                <tr>
-                                    <td class="insideTD" style="font-weight: bold; padding-left: 10px">Summary</td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                </tr>
-                                {{-- CH5Q1 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The expected key findings of the
-                                        study
-                                        are very clearly stated</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q1 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q1 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q1 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q1 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                <tr>
-                                    <td class="insideTD" style="font-weight: bold; padding-left: 10px">Conclusions</td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                </tr>
-                                {{-- CH5Q2 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The expected findings are highly
-                                        consistent with the objectives of the study</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q2 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q2 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q2 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                        <td class="insideTD text-center">@if($result->CH5Q2 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
-                                <tr>
-                                    <td class="insideTD" style="font-weight: bold; padding-left: 10px">Recommendations
-                                    </td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                    <td class="insideTD"></td>
-                                </tr>
-                                {{-- CH5Q3 --}}
-                                <tr>
-                                    <td class="insideTD" style="padding-left: 10px">• The recommendations are clearly
-                                        stated
-                                    </td>
-                                    <td class="insideTD text-center">@if($result->CH5Q3 == 4) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH5Q3 == 3) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH5Q3 == 2) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                    <td class="insideTD text-center">@if($result->CH5Q3 == 1) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                                </tr>
                             </table>
                             <div class="row p-3">
                                 <p>
@@ -717,7 +552,7 @@
                                         style="margin-left: 84px">85 - 89</span> <br>
                                     <span style="margin-left: 70px">Re - Defense</span><span style="margin-left: 110px">84
                                         - below</span> <br><br>
-                                    <b>Overall Score: </b>&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$result->overallScore}}/160</b> <br>
+                                    <b>Overall Score: </b>&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$result->overallScore}}/112</b> <br>
                                     <b>Mean Score: </b>&nbsp;&nbsp;&nbsp;&nbsp;<b>{{number_format($result->meanScore,2)}} </b>
                                 </p>
                             </div>

@@ -7,6 +7,7 @@ use App\Models\finalEvalproposal;
 use App\Models\Member;
 use App\Models\Section;
 use App\Models\GroupModel;
+use App\Models\oralEvaluation;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\titleEvaluation;
@@ -88,10 +89,16 @@ class HomeController extends Controller
                 ->where('groupName', $group->name)
                 ->where('course', $courses->Coursename)
                 ->where('capstoneTitle', $group->capstoneTitle)->first();
-            
-            $groupby = Student::where('group',$group->name)->count();
+
+            $viewbtnOralResult = oralEvaluation::where('evaluator', $evaluator)
+                ->where('section', $section->Sectionname)
+                ->where('groupName', $group->name)
+                ->where('course', $courses->Coursename)
+                ->where('capstoneTitle', $group->capstoneTitle)->first();
+
+            $groupby = Student::where('group', $group->name)->count();
             //dd($groupby);
-            return view('evaluation.index', compact('group', 'member', 'courses', 'section', 'viewbtnresult', 'viewbtnresultFinal','groupby'));
+            return view('evaluation.index', compact('group', 'member', 'courses', 'section', 'viewbtnresult', 'viewbtnresultFinal', 'groupby','viewbtnOralResult'));
         }
     }
 
@@ -209,7 +216,7 @@ class HomeController extends Controller
                 ->where('status', 1)
                 ->orderBy('lastname', 'ASC')
                 ->get();
-            return view('evaluation.final_evaluation', compact('group', 'member', 'courses', 'section','individual'));
+            return view('evaluation.final_evaluation', compact('group', 'member', 'courses', 'section', 'individual'));
         }
     }
 
@@ -319,6 +326,122 @@ class HomeController extends Controller
             $finalEvaluation->save();
 
             return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/final_evaluation/result')->with(['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section]);
+        }
+    }
+
+    public function viewOralEval($course_name, $section_name, $group_name)
+    {
+        $courses = Course::where('Coursename', $course_name)->where('status', 1)->first();
+        $section = Section::where('Sectionname', $section_name)->where('status', 1)->first();
+        $group = GroupModel::where('name', $group_name)->where('status', 1)->first();
+
+        if ($group && $section && $courses) {
+            $member = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+
+            $individual = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)
+                ->orderBy('lastname', 'ASC')
+                ->get();
+            return view('evaluation.oral_evaluation', compact('group', 'member', 'courses', 'section', 'individual'));
+        }
+    }
+
+    public function storeOralEval(Request $request, $course_name, $section_name, $group_name)
+    {
+        $courses = Course::where('Coursename', $course_name)->where('status', 1)->first();
+        $section = Section::where('Sectionname', $section_name)->where('status', 1)->first();
+        $group = GroupModel::where('name', $group_name)->where('status', 1)->first();
+
+        if ($courses && $section && $group) {
+            $member = Student::where('course', $courses->Coursename)
+                ->where('section', $section->Sectionname)
+                ->where('group', $group->name)
+                ->where('status', 1)->get();
+
+            $oralEvaluation = new oralEvaluation();
+
+            $evaluator = Auth::user()->name;
+            $groupName = $group->name;
+            $capstoneTitle = $group->capstoneTitle;
+            $evalsection = $section->Sectionname;
+            $evalcourse = $courses->Coursename;
+
+            $lastname = $request->input('name');
+            $grade = $request->input('grade');
+
+
+            foreach ($lastname as $key => $n) {
+                DB::table('student')->where('id', $lastname[$key])->update(array('oralProposalGrade' => $grade[$key]));
+            }
+
+            $recommendation = $request->input('recommendation');
+
+            $oralEvaluation->evaluator = $evaluator;
+            $oralEvaluation->groupName = $groupName;
+            $oralEvaluation->capstoneTitle = $capstoneTitle;
+            $oralEvaluation->section = $evalsection;
+            $oralEvaluation->course = $evalcourse;
+            $oralEvaluation->recommendation = $recommendation;
+
+            $chapter1 = $request->input('CH1Q1') + $request->input('CH1Q2') + $request->input('CH1Q3') + $request->input('CH1Q4') + $request->input('CH1Q5') + $request->input('CH1Q6') + $request->input('CH1Q7') + $request->input('CH1Q8');
+            $chapter2 = $request->input('CH2Q1') + $request->input('CH2Q2') + $request->input('CH2Q3') + $request->input('CH2Q4') + $request->input('CH2Q5') + $request->input('CH2Q6') + $request->input('CH2Q7') + $request->input('CH2Q8') + $request->input('CH2Q9');
+            $chapter3 = $request->input('CH3Q1') + $request->input('CH3Q2') + $request->input('CH3Q3') + $request->input('CH3Q4') + $request->input('CH3Q5') + $request->input('CH3Q6') + $request->input('CH3Q7') + $request->input('CH3Q8') + $request->input('CH3Q9') + $request->input('CH3Q10') + $request->input('CH3Q11');
+
+            $totalScore = $chapter1 + $chapter2 + $chapter3;
+
+            $meanScore = $totalScore / 112 * 100;
+
+
+
+            //CHAPTER 1
+            $oralEvaluation->CH1Q1 = $request->input('CH1Q1');
+            $oralEvaluation->CH1Q2 = $request->input('CH1Q2');
+            $oralEvaluation->CH1Q3 = $request->input('CH1Q3');
+            $oralEvaluation->CH1Q4 = $request->input('CH1Q4');
+            $oralEvaluation->CH1Q5 = $request->input('CH1Q5');
+            $oralEvaluation->CH1Q6 = $request->input('CH1Q6');
+            $oralEvaluation->CH1Q7 = $request->input('CH1Q7');
+            $oralEvaluation->CH1Q8 = $request->input('CH1Q8');
+
+            //CHAPTER 2
+            $oralEvaluation->CH2Q1 = $request->input('CH2Q1');
+            $oralEvaluation->CH2Q2 = $request->input('CH2Q2');
+            $oralEvaluation->CH2Q3 = $request->input('CH2Q3');
+            $oralEvaluation->CH2Q4 = $request->input('CH2Q4');
+            $oralEvaluation->CH2Q5 = $request->input('CH2Q5');
+            $oralEvaluation->CH2Q6 = $request->input('CH2Q6');
+            $oralEvaluation->CH2Q7 = $request->input('CH2Q7');
+            $oralEvaluation->CH2Q8 = $request->input('CH2Q8');
+            $oralEvaluation->CH2Q9 = $request->input('CH2Q9');
+
+            //CHAPTER 3
+            $oralEvaluation->CH3Q1 = $request->input('CH3Q1');
+            $oralEvaluation->CH3Q2 = $request->input('CH3Q2');
+            $oralEvaluation->CH3Q3 = $request->input('CH3Q3');
+            $oralEvaluation->CH3Q4 = $request->input('CH3Q4');
+            $oralEvaluation->CH3Q5 = $request->input('CH3Q5');
+            $oralEvaluation->CH3Q6 = $request->input('CH3Q6');
+            $oralEvaluation->CH3Q7 = $request->input('CH3Q7');
+            $oralEvaluation->CH3Q8 = $request->input('CH3Q8');
+            $oralEvaluation->CH3Q9 = $request->input('CH3Q9');
+            $oralEvaluation->CH3Q10 = $request->input('CH3Q10');
+            $oralEvaluation->CH3Q11 = $request->input('CH3Q11');
+
+
+            $oralEvaluation->overallScore = $totalScore;
+            $oralEvaluation->meanScore = $meanScore;
+
+            // return $meanScore;
+            $oralEvaluation->save();
+
+            return redirect('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/oral_evaluation/result')->with(['group' => $group, 'member' => $member, 'courses' => $courses, 'section' => $section]);
         }
     }
 }

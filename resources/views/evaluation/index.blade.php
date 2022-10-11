@@ -101,8 +101,14 @@
                                 <h5>Oral Defense Evaluation Sheet</h5>
                                 <small class="section"></small>
                             </b>
+                            @if($viewbtnOralResult === null)
                             <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/oral_evaluation') }}"
                                 class="btn btn-primary">Select</a>
+                            @else
+                            <a href="{{ url('home/' . $courses->Coursename . '/' . $section->Sectionname . '/' . $group->name . '/oral_evaluation/result') }}"
+                                class="btn btn-primary">View Result</a>
+                            @endif
+
                         </div>
                     </div>
                 </div>

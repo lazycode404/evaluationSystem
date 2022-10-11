@@ -64,6 +64,21 @@
                     <a href="/adviser/final_proposal_evaluation" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>0</h3>
+
+                        <p>Proposal Evaluation Results</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-file-alt"></i>
+                    </div>
+                    <a href="/adviser/final_proposal_evaluation" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

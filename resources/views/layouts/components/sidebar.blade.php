@@ -63,6 +63,14 @@
 
             @if (Auth::user()->role == 1)
                 <li class="nav-item">
+                    <a href="/adviser/dashboard"
+                        class="nav-link {{ 'adviser/dashboard' == request()->path() ? 'active' : '' }}">
+                        <i class="fa fa-tachometer-alt nav-icon" aria-hidden="true"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="/adviser/group"
                         class="nav-link {{ 'adviser/group' == request()->path() ? 'active' : '' }}">
                         <i class="fa fa-address-book nav-icon"></i>
@@ -79,9 +87,9 @@
                 </li>
 
                 <li
-                    class="nav-item {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') ? 'active menu-open' : '' }}">
+                    class="nav-item {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') || request()->is('adviser/oral_evaluation') ? 'active menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') ? 'active menu-open' : '' }}">
+                        class="nav-link {{ request()->is('adviser/title_proposal_evaluation') || request()->is('adviser/final_proposal_evaluation') || request()->is('adviser/oral_evaluation') ? 'active menu-open' : '' }}">
                         <i class="nav-icon fa fa-file-alt" aria-hidden="true"></i>
                         <p>
                             Evaluation Results
@@ -103,6 +111,15 @@
                                 class="nav-link {{ 'adviser/final_proposal_evaluation' == request()->path() ? 'active' : '' }}">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p class="finals">Final Proposal Evaluation</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/adviser/oral_evaluation"
+                                class="nav-link {{ 'adviser/oral_evaluation' == request()->path() ? 'active' : '' }}">
+                                <i class="fa fa-circle nav-icon"></i>
+                                <p class="finals">Oral Proposal Evaluation</p>
                             </a>
                         </li>
                     </ul>
