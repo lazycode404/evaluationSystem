@@ -35,7 +35,7 @@
                                     <th>Email</th>
                                     <th width="80">Role</th>
                                     <th width="90">Status</th>
-                                    <th width="8">Action</th>
+                                    <th width="70">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,8 +62,15 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm"><i class="fa fa-edit"
-                                                    aria-hidden="true"></i></button>
+                                            @if ($row->role == 0)
+                                            @else
+                                                <button class="btn btn-primary btn-sm btnedit"
+                                                    value="{{ $row->id }}"><i class="fa fa-edit"
+                                                        aria-hidden="true"></i></button>
+                                                {{-- <button class="btn btn-danger btn-sm btnreset"
+                                                    value="{{ $row->id }}"><i class="fa fa-lock"
+                                                        aria-hidden="true"></i></button> --}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -124,18 +131,74 @@
         </div>
     </div>
 
+
+    <!-- EDIT USER MODAL -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('admin/user/edit') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" id="userID" name="userID">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="editName" id="editName">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="editEmail" id="editEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="editRole">Role</label>
+                            <select name="editRole" id="editRole" class="form-control">
+                                <option value="1">Adviser</option>
+                                <option value="2">User</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESET PASSWORD MODAL -->
+    <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="resetID" name="resetID">
+                    Are you sure you want to reset password?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary reset">Yes, Reset!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
     <script>
-        // let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-        // elems.forEach(function(html) {
-        //     let switchery = new Switchery(html, {
-        //         size: 'small'
-        //     });
-        // });
-
         $(document).ready(function() {
             $('.toggle-class').change(function() {
                 let status = $(this).prop('checked') === true ? 1 : 0;
@@ -149,7 +212,7 @@
                         'user_id': userId
                     },
                     success: function(data) {
-                        console.log(data.message);
+                        //console.log(data.message);
                         toastr.options.closeButton = true;
                         toastr.options.closeMethod = 'fadeOut';
                         toastr.options.closeDuration = 100;
@@ -159,5 +222,64 @@
                 });
             });
         });
+
+        $(document).ready(function() {
+            $('.btnedit').click(function(e) {
+                e.preventDefault();
+
+                var userID = $(this).val();
+                //alert(userID);
+                $('#editModal').modal('show');
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/admin/user/edit/" + userID,
+                    success: function(response) {
+                        if (response.status == 200) {
+                            $('#userID').val(response.user.id);
+                            $('#editName').val(response.user.name);
+                            $('#editEmail').val(response.user.email);
+                            $('#editRole').val(response.user.role);
+                        }
+                    }
+                })
+            });
+        });
+
+        $(document).ready(function(){
+            $('.btnreset').click(function(e){
+                e.preventDefault();
+
+                $('#resetModal').modal('show');
+                var resetID = $(this).val();
+                $('#resetID').val(resetID);
+            });
+        });
+
+        $(document).ready(function(){
+            $('.reset').click(function(e){
+                e.preventDefault();
+                var resetID = $('#resetID').val();
+                var pass = '1234';
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '{{route('users.reset.password')}}',
+                    data: {
+                        'password': pass,
+                        'resetID': resetID
+                    },
+                    success: function(data){
+                        $('#resetModal').modal('hide');
+                        toastr.options.closeButton = true;
+                        toastr.options.closeMethod = 'fadeOut';
+                        toastr.options.closeDuration = 100;
+                        toastr.options.positionClass = 'toast-top-center';
+                        toastr.success(data.message);
+                    }
+                });
+            })
+        })
     </script>
 @endsection

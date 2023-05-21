@@ -61,7 +61,7 @@ Route::prefix('/')->middleware(['auth', 'user'])->group(function () {
 
     Route::post('home/{course_name}/{section_name}/{group_name}/oral_evaluation/submitted', [HomeController::class, 'storeOralEval']);
     Route::get('home/{course_name}/{section_name}/{group_name}/oral_evaluation/result', [Result::class, 'oralEvalResult']);
-    
+
 });
 
 //SYSTEM ADMIN WEBPAGE
@@ -76,6 +76,10 @@ Route::prefix('admin')->middleware(['auth', 'systemadmin'])->group(function () {
     Route::post('users/create', [UserController::class, 'store']);
     //UPDATE USER STATUS
     Route::get('user/update', [UserController::class, 'updateStatus'])->name('users.update.status');
+
+    Route::get('user/edit/{id}',[UserController::class,'edit']);
+    Route::post('user/edit',[UserController::class,'update']);
+    Route::get('user/reset',[UserController::class,'resetPass'])->name('users.reset.password');
 
     // SYSTEM ADMIN VIEW COURSE
     Route::get('/course', [CourseController::class, 'index']);
@@ -116,7 +120,7 @@ Route::prefix('adviser')->middleware(['auth', 'adviser'])->group(function () {
     Route::post('group/edit', [GroupController::class, 'groupupdateData']);
     Route::get('group/search', [GroupController::class, 'searchGroupdata'])->name('group.search');
     Route::post('group/unarchive',[GroupController::class, 'unarchive']);
-    
+
 
     //EVALUATION
     Route::get('/title_proposal_evaluation', [titleProposalResultController::class, 'index']);

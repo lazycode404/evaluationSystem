@@ -48,7 +48,45 @@ class UserController extends Controller
         $user = User::findOrFail($request->user_id);
         $user->status = $request->status;
         $user->save();
-    
+
         return response()->json(['message' => 'User status updated successfully.']);
+    }
+
+    public function resetPass(Request $request)
+    {
+        $user = User::findOrFail($request->resetID);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['message' => 'User password reset successfully.']);
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        if($user)
+        {
+            return response()->json([
+                'status' => 200,
+                'user' => $user,
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 200,
+                'message' => 'User not found',
+            ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $user = User::findOrFail($request->userID);
+        $user->name = $request->editName;
+        $user->email = $request->editEmail;
+        $user->role = $request->editRole;
+        $user->save();
+        return redirect('admin/user')->with('success','User Update Successfully!');
+
     }
 }

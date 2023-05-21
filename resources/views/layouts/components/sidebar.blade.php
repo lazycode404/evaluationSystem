@@ -107,19 +107,19 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/adviser/final_proposal_evaluation"
-                                class="nav-link {{ 'adviser/final_proposal_evaluation' == request()->path() ? 'active' : '' }}">
+                            <a href="/adviser/oral_evaluation"
+                                class="nav-link {{ 'adviser/oral_evaluation' == request()->path() ? 'active' : '' }}">
                                 <i class="fa fa-circle nav-icon"></i>
-                                <p class="finals">Final Proposal Evaluation</p>
+                                <p class="finals">Oral Proposal Evaluation</p>
                             </a>
                         </li>
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/adviser/oral_evaluation"
-                                class="nav-link {{ 'adviser/oral_evaluation' == request()->path() ? 'active' : '' }}">
+                            <a href="/adviser/final_proposal_evaluation"
+                                class="nav-link {{ 'adviser/final_proposal_evaluation' == request()->path() ? 'active' : '' }}">
                                 <i class="fa fa-circle nav-icon"></i>
-                                <p class="finals">Oral Proposal Evaluation</p>
+                                <p class="finals">Final Proposal Evaluation</p>
                             </a>
                         </li>
                     </ul>

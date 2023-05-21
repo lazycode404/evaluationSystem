@@ -36,29 +36,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                    {{ old('remember') ? 'checked' : '' }}>
-
-                                <label class="remember" for="remember">
-                                    {{ __('Remember Me') }}
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
+                        <div class="col-md-4"></div>
                         <div class="col-4 mb-1">
                             <button type="submit" class="btn btn-primary btn-block">
                                 {{ __('Sign in') }}
                             </button>
                         </div>
+                        <div class="col-md-4"></div>
                         <!-- /.col -->
                     </div>
                 </form>
-
-                <p class="mb-1 text-center">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
             </div>
             <!-- /.login-card-body -->
         </div>
